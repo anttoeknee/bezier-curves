@@ -1,5 +1,5 @@
 
-#include "../includes/App.hpp"
+#include "../includes/App.h"
 
 int main() {
     App app;
