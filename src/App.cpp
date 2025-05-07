@@ -2,7 +2,13 @@
 #include <SFML/Graphics/Rect.hpp>
 
 #include "../includes/App.h"
+
+#include <iostream>
+
+#include "../includes/platform/platform.h"
+#include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/RectangleShape.hpp"
+#include "SFML/Graphics/Text.hpp"
 
 
 App::App()
@@ -31,6 +37,29 @@ void App::render() {
 
     for (auto& shape : shapes) {
         window.draw(*shape);
+    }
+
+    // TODO: relocate
+    std::string memUsage = getMemUsage();
+    try {
+
+        // Find font on OS
+        // TODO: create platform specific implementation
+        std::string fontPath = "/System/Library/Fonts/SFNS.ttf";
+        sf::Font fontSfProTextReg(fontPath);
+        sf::Text text(fontSfProTextReg);
+
+        text.setString(memUsage);
+        text.setCharacterSize(24); // in pixels, not points!
+        text.setFillColor(sf::Color::Red);
+        text.setStyle(sf::Text::Bold | sf::Text::Underlined);
+        text.setPosition({ 10, 10});
+
+        window.draw(text);
+
+    } catch (const std::exception& e) {
+        // TODO: figure out what sending something to std::cerr does
+        std::cerr << e.what() << std::endl;
     }
 
     window.display();
