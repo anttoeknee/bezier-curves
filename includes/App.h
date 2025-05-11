@@ -4,12 +4,18 @@
 #include "Point.h"
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/Graphics/Shape.hpp"
+#include "utils/Config.h"
 
 #endif //APP_H
 
 class App {
 public:
-    App();
+
+    Config config;
+
+    std::string title;
+
+    App(Config config);
 
     void run();
 

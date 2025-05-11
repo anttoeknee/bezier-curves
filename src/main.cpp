@@ -2,6 +2,6 @@
 #include "../includes/App.h"
 
 int main() {
-    App app;
+    App app(Config::load());
     app.run();
 }

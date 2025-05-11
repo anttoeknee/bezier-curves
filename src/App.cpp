@@ -1,19 +1,17 @@
-
 #include <SFML/Graphics/Rect.hpp>
 
 #include "../includes/App.h"
 
 #include <iostream>
 
-#include "../includes/platform/platform.h"
+#include "../includes/utils/Mem.h"
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Graphics/Text.hpp"
 
 
-App::App()
-    : window(sf::VideoMode({1920u, 1080u}), "Bezier Curves")
-{
+App::App(Config config)
+    : config(), window(sf::VideoMode({config.windowHeight, config.windowWidth}), "Bezier Curves") {
     window.setFramerateLimit(60);
 }
 
@@ -35,14 +33,13 @@ void App::handleEvents() {
 void App::render() {
     window.clear();
 
-    for (auto& shape : shapes) {
+    for (auto &shape: shapes) {
         window.draw(*shape);
     }
 
     // TODO: relocate
     std::string memUsage = getMemUsage();
     try {
-
         // Find font on OS
         // TODO: create platform specific implementation
         std::string fontPath = "/System/Library/Fonts/SFNS.ttf";
@@ -53,11 +50,10 @@ void App::render() {
         text.setCharacterSize(24); // in pixels, not points!
         text.setFillColor(sf::Color::Red);
         text.setStyle(sf::Text::Bold | sf::Text::Underlined);
-        text.setPosition({ 10, 10});
+        text.setPosition({10, 10});
 
         window.draw(text);
-
-    } catch (const std::exception& e) {
+    } catch (const std::exception &e) {
         // TODO: figure out what sending something to std::cerr does
         std::cerr << e.what() << std::endl;
     }
@@ -66,7 +62,6 @@ void App::render() {
 }
 
 void App::update() {
-
     // Initial state for points
     // TODO: move point data somewhere else
     Point p1(200, 400, 15, 15, "Point 1");
@@ -78,4 +73,3 @@ void App::update() {
 
     shapes.push_back(std::make_unique<sf::RectangleShape>(rectangle));
 }
-

@@ -18,14 +18,16 @@ FetchContent_MakeAvailable(SFML)
 add_executable(main src/main.cpp src/App.cpp
         includes/Point.h
         src/Point.cpp
-        includes/platform/platform.h
+        includes/utils/Mem.h
+        includes/utils/Config.h
+        src/utils/Config.mm
 )
 
 # Add platform-specific source
 if(APPLE)
-    target_sources(main PRIVATE src/utils/platform.mm)
+    target_sources(main PRIVATE src/utils/Mem.mm)
 elseif(WIN32)
-    target_sources(main PRIVATE src/utils/platform.cpp)
+    target_sources(main PRIVATE src/utils/Mem.cpp)
 endif()
 
 # Use C++17 and link SFML

@@ -1,7 +1,7 @@
 
 #ifdef __APPLE__
 #include <Foundation/Foundation.h>
-#include "../../includes/platform/platform.h"
+#include "../../includes/utils/Mem.h"
 
 std::string getMemUsage() {
 
@@ -10,6 +10,7 @@ std::string getMemUsage() {
     mach_msg_type_number_t infoCount = TASK_BASIC_INFO_COUNT;
     kern_return_t kr = task_info(mach_task_self(), TASK_BASIC_INFO, (task_info_t)&info, &infoCount);
 
+    // TODO: Exception instead?
     if (kr != KERN_SUCCESS) {
         return "Error retrieving memory info.";
     }
