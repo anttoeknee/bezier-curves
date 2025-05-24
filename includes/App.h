@@ -15,7 +15,6 @@ struct PointData {
 
 class App {
 public:
-
     Config config;
 
     std::string title;
@@ -35,9 +34,16 @@ private:
 
     void render();
 
+    sf::Vector2f quadraticBezier(
+        const sf::Vector2f &p0,
+        const sf::Vector2f &p1,
+        const sf::Vector2f &p2,
+        float t
+    );
+
     std::vector<std::unique_ptr<sf::Shape>> shapes;
 
     bool isDragging = false;
-    sf::Shape* draggedShape = nullptr;
+    sf::Shape *draggedShape = nullptr;
     sf::Vector2f dragOffset;
 };

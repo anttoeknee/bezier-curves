@@ -10,7 +10,7 @@
 #include "SFML/Graphics/Text.hpp"
 
 App::App(Config config)
-    : config(), window(sf::VideoMode({config.windowHeight, config.windowWidth}), "Bezier Curves") {
+    : config(), window(sf::VideoMode({config.windowHeight, config.windowWidth}), "Bezier Curves", sf::Style::Titlebar | sf::Style::Close) {
     window.setFramerateLimit(60);
 
     startPoints = {
@@ -84,11 +84,21 @@ void App::handleEvents() {
 void App::render() {
     window.clear();
 
+    // Control points
     for (auto &shape: shapes) {
         window.draw(*shape);
     }
 
-    // TODO: relocate
+    // Quadratic Bezier
+    std::vector<sf::Vertex> bezierLine;
+    for (float t = 0; t <= 1.0f; t += 0.01f) {
+        sf::Vector2f point = quadraticBezier(shapes[0]->getPosition(), shapes[1]->getPosition(), shapes[2]->getPosition(), t);
+        bezierLine.push_back(sf::Vertex({point, sf::Color::White}));
+    }
+
+    window.draw(&bezierLine[0], bezierLine.size(), sf::PrimitiveType::LineStrip);
+
+    // Debug info
     std::string memUsage = getMemUsage();
     try {
         // Find font on OS
@@ -119,5 +129,14 @@ void App::update() {
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
         draggedShape->setPosition({mousePos.x - dragOffset.x, mousePos.y - dragOffset.y});
     }
+}
 
+sf::Vector2f App::quadraticBezier(
+    const sf::Vector2f& p0,
+    const sf::Vector2f& p1,
+    const sf::Vector2f& p2,
+    float t
+) {
+    float u = 1 - t;
+    return u * u * p0 + 2 * u * t * p1 + t * t * p2;
 }
