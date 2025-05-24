@@ -16,8 +16,6 @@ FetchContent_MakeAvailable(SFML)
 
 # Create the executable
 add_executable(main src/main.cpp src/App.cpp
-        includes/Point.h
-        src/Point.cpp
         includes/utils/Mem.h
         includes/utils/Config.h
         src/utils/Config.mm

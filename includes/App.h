@@ -1,12 +1,17 @@
 #ifndef APP_H
 #define APP_H
 
-#include "Point.h"
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/Graphics/Shape.hpp"
 #include "utils/Config.h"
 
 #endif //APP_H
+
+struct PointData {
+    std::string name;
+    sf::Vector2f position;
+    sf::Vector2f size;
+};
 
 class App {
 public:
@@ -19,14 +24,20 @@ public:
 
     void run();
 
+    std::vector<PointData> startPoints;
+
 private:
     sf::RenderWindow window;
-
-    std::vector<std::unique_ptr<sf::Shape>> shapes;
 
     void handleEvents();
 
     void update();
 
     void render();
+
+    std::vector<std::unique_ptr<sf::Shape>> shapes;
+
+    bool isDragging = false;
+    sf::Shape* draggedShape = nullptr;
+    sf::Vector2f dragOffset;
 };
