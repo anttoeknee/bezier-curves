@@ -8,6 +8,7 @@
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Graphics/Text.hpp"
+#include "core/math/Geometry.h"
 
 App::App(Config config)
     : config(), window(sf::VideoMode({config.windowHeight, config.windowWidth}), "Bezier Curves", sf::Style::Titlebar | sf::Style::Close) {
@@ -92,7 +93,7 @@ void App::render() {
     // Quadratic Bezier
     std::vector<sf::Vertex> bezierLine;
     for (float t = 0; t <= 1.0f; t += 0.01f) {
-        sf::Vector2f point = quadraticBezier(shapes[0]->getPosition(), shapes[1]->getPosition(), shapes[2]->getPosition(), t);
+        sf::Vector2f point = math::quadraticBezier(shapes[0]->getPosition(), shapes[1]->getPosition(), shapes[2]->getPosition(), t);
         bezierLine.push_back(sf::Vertex({point, sf::Color::White}));
     }
 
@@ -129,14 +130,4 @@ void App::update() {
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
         draggedShape->setPosition({mousePos.x - dragOffset.x, mousePos.y - dragOffset.y});
     }
-}
-
-sf::Vector2f App::quadraticBezier(
-    const sf::Vector2f& p0,
-    const sf::Vector2f& p1,
-    const sf::Vector2f& p2,
-    float t
-) {
-    float u = 1 - t;
-    return u * u * p0 + 2 * u * t * p1 + t * t * p2;
 }
