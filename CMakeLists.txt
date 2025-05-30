@@ -19,10 +19,11 @@ add_executable(main src/main.cpp src/App.cpp
         includes/utils/Mem.h
         includes/utils/Config.h
         src/utils/Config.mm
-        src/elements/Element.cpp
+        src/elements/Element.hpp
         src/elements/QuadraticBezier.cpp
         src/core/math/Geometry.h
         src/core/math/Geometry.cpp
+        src/elements/QuadraticBezier.hpp
 )
 
 # Add platform-specific source

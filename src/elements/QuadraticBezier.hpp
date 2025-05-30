@@ -1,0 +1,30 @@
+#pragma once
+#include "Element.hpp"
+#include "SFML/Graphics/Shape.hpp"
+#include "SFML/Window/WindowBase.hpp"
+
+struct PointData {
+    std::string name;
+    sf::Vector2f position;
+    sf::Vector2f size;
+};
+
+class QuadraticBezier : public Element {
+    std::vector<std::unique_ptr<sf::Shape> > controlPoints;
+    std::vector<PointData> startPoints;
+
+    bool isDragging = false;
+    sf::Shape *draggedShape = nullptr;
+    sf::Vector2f dragOffset;
+
+public:
+    explicit QuadraticBezier(std::vector<PointData> &&startPoints);
+
+    void draw(sf::RenderWindow &target) const override;
+
+    void update(sf::RenderWindow &target) const override;
+
+    void handleMouseButtonPressed(sf::Vector2i &mousePos) override;
+
+    void handleMouseButtonReleased() override;
+};
