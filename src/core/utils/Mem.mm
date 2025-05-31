@@ -1,7 +1,7 @@
 
 #ifdef __APPLE__
 #include <Foundation/Foundation.h>
-#include "Mem.h"
+#include "Mem.hpp"
 
 std::string getMemUsage() {
 
