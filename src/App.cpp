@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "core/utils/Mem.h"
+#include "core/utils/Mem.hpp"
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/Text.hpp"
 #include "elements/Element.hpp"

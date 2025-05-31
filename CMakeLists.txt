@@ -16,8 +16,8 @@ FetchContent_MakeAvailable(SFML)
 
 # Create the executable
 add_executable(main src/main.cpp src/App.cpp
-        src/core/utils/Mem.h
-        src/core/utils/Config.h
+        src/core/utils/Mem.hpp
+        src/core/utils/Config.hpp
         src/core/utils/Config.mm
         src/elements/Element.hpp
         src/elements/QuadraticBezier.cpp

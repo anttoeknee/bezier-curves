@@ -3,7 +3,7 @@
 
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/Graphics/Shape.hpp"
-#include "core/utils/Config.h"
+#include "core/utils/Config.hpp"
 #include "elements/Element.hpp"
 
 #endif //APP_H
