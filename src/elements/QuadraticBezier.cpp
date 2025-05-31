@@ -9,8 +9,6 @@
 #include "SFML/Window/Mouse.hpp"
 
 
-
-
 QuadraticBezier::QuadraticBezier(std::vector<PointData> &&startPoints_)
     : startPoints(std::move(startPoints_)) {
     // Initial state
@@ -44,7 +42,6 @@ void QuadraticBezier::draw(sf::RenderWindow &target) const {
 }
 
 void QuadraticBezier::update(sf::RenderWindow &target) const {
-
     // Handle dragging
     if (isDragging && draggedShape) {
         sf::Vector2i mousePos = sf::Mouse::getPosition(target);
@@ -64,7 +61,8 @@ void QuadraticBezier::handleMouseButtonPressed(sf::Vector2i &mousePos) {
 
             // Make sure we don't get jumpy movement of the shape
             draggedShape = controlPoint.get();
-            dragOffset = sf::Vector2f(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)) - draggedShape->getPosition();
+            dragOffset = sf::Vector2f(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)) - draggedShape->
+                         getPosition();
 
             break;
         }

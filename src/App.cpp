@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "core/utils/Mem.hpp"
+#include "elements/Debug.hpp"
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/Text.hpp"
 #include "elements/Element.hpp"
@@ -23,7 +24,9 @@ App::App(Config config)
         {"Point 3", {1000, 275}, {15, 15}}
     };
 
-    element = std::make_unique<QuadraticBezier>(std::move(startPoints));
+    // TODO: move to a scene object
+    elements.push_back(std::make_unique<QuadraticBezier>(std::move(startPoints)));
+    elements.push_back(std::make_unique<Debug>());
 }
 
 void App::run() {
@@ -45,12 +48,16 @@ void App::handleEvents() {
         // Handle mouse down
         if (event->is<sf::Event::MouseButtonPressed>()) {
             sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-            element->handleMouseButtonPressed(mousePos);
+            for (auto &element: elements) {
+                element->handleMouseButtonPressed(mousePos);
+            }
         }
 
         // Handle mouse release
         if (event->is<sf::Event::MouseButtonReleased>()) {
-            element->handleMouseButtonReleased();
+            for (auto &element: elements) {
+                element->handleMouseButtonReleased();
+            }
         }
     }
 }
@@ -58,33 +65,14 @@ void App::handleEvents() {
 void App::render() {
     window.clear();
 
-    // Quadratic Bezier
-    element->draw(window);
-
-    // Debug info
-    std::string memUsage = getMemUsage();
-    try {
-        // Find font on OS
-        // TODO: create platform specific implementation
-        std::string fontPath = "/System/Library/Fonts/SFNS.ttf";
-        sf::Font fontSfProTextReg(fontPath);
-        sf::Text text(fontSfProTextReg);
-
-        text.setString(memUsage);
-        text.setCharacterSize(24);
-        text.setFillColor(sf::Color::Red);
-        text.setStyle(sf::Text::Bold | sf::Text::Underlined);
-        text.setPosition({10, 10});
-
-        window.draw(text);
-    } catch (const std::exception &e) {
-        // TODO: figure out what sending something to std::cerr does
-        std::cerr << e.what() << std::endl;
+    for (auto &element: elements) {
+        element->draw(window);
     }
-
     window.display();
 }
 
 void App::update() {
-    element->update(window);
+    for (auto &element: elements) {
+        element->update(window);
+    }
 }

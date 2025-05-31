@@ -27,5 +27,5 @@ private:
 
     void render();
 
-    std::unique_ptr<Element> element;
+    std::vector<std::unique_ptr<Element>> elements;
 };
