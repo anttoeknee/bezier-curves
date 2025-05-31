@@ -1,7 +1,6 @@
 #pragma once
 #include "Element.hpp"
 #include "SFML/Graphics/Shape.hpp"
-#include "SFML/Window/WindowBase.hpp"
 
 struct PointData {
     std::string name;

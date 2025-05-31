@@ -1,13 +1,12 @@
-#include "App.h"
+#include "App.hpp"
 
 #include <iostream>
 
-#include "core/utils/Mem.hpp"
-#include "elements/Debug.hpp"
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/Text.hpp"
 #include "elements/Element.hpp"
-#include "elements/QuadraticBezier.hpp"
+#include "scenes/Bezier.hpp"
+
 
 App::App(Config config)
     : config(),
@@ -17,16 +16,8 @@ App::App(Config config)
       ) {
     window.setFramerateLimit(60);
 
-    // TODO: move to a scene object
-    std::vector<PointData> startPoints = {
-        {"Point 1", {200, 400}, {15, 15}},
-        {"Point 2", {500, 100}, {15, 15}},
-        {"Point 3", {1000, 275}, {15, 15}}
-    };
-
-    // TODO: move to a scene object
-    elements.push_back(std::make_unique<QuadraticBezier>(std::move(startPoints)));
-    elements.push_back(std::make_unique<Debug>());
+    // Bezier Curves
+    scenes.push_back(std::make_unique<Bezier>());
 }
 
 void App::run() {
@@ -48,15 +39,15 @@ void App::handleEvents() {
         // Handle mouse down
         if (event->is<sf::Event::MouseButtonPressed>()) {
             sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-            for (auto &element: elements) {
-                element->handleMouseButtonPressed(mousePos);
+            for (auto &scene: scenes) {
+                scene->handleMouseButtonPressed(mousePos);
             }
         }
 
         // Handle mouse release
         if (event->is<sf::Event::MouseButtonReleased>()) {
-            for (auto &element: elements) {
-                element->handleMouseButtonReleased();
+            for (auto &scene: scenes) {
+                scene->handleMouseButtonReleased();
             }
         }
     }
@@ -65,14 +56,14 @@ void App::handleEvents() {
 void App::render() {
     window.clear();
 
-    for (auto &element: elements) {
-        element->draw(window);
+    for (auto &scene: scenes) {
+        scene->draw(window);
     }
     window.display();
 }
 
 void App::update() {
-    for (auto &element: elements) {
-        element->update(window);
+    for (auto &scene: scenes) {
+        scene->update(window);
     }
 }

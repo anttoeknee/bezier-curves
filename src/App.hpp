@@ -4,7 +4,7 @@
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/Graphics/Shape.hpp"
 #include "core/utils/Config.hpp"
-#include "elements/Element.hpp"
+#include "scenes/Scene.hpp"
 
 #endif //APP_H
 
@@ -27,5 +27,5 @@ private:
 
     void render();
 
-    std::vector<std::unique_ptr<Element>> elements;
+    std::vector<std::unique_ptr<Scene>> scenes;
 };

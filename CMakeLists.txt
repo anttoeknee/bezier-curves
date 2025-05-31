@@ -26,6 +26,9 @@ add_executable(main src/main.cpp src/App.cpp
         src/elements/QuadraticBezier.hpp
         src/elements/Debug.hpp
         src/elements/Debug.cpp
+        src/scenes/Scene.hpp
+        src/scenes/Bezier.cpp
+        src/scenes/Bezier.hpp
 )
 
 # Add platform-specific source
