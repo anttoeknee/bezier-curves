@@ -5,9 +5,9 @@
 Bezier::Bezier() {
 
     std::vector<PointData> startPoints = {
-        {"Point 1", {200, 400}, {15, 15}},
-        {"Point 2", {500, 100}, {15, 15}},
-        {"Point 3", {1000, 275}, {15, 15}}
+        {"Point 1", {50, 400}, {15, 15}},
+        {"Point 2", {350, 100}, {15, 15}},
+        {"Point 3", {850, 275}, {15, 15}}
     };
 
     elements.push_back(std::make_unique<QuadraticBezier>(std::move(startPoints)));

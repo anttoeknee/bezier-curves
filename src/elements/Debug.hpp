@@ -1,9 +1,11 @@
 #pragma once
 #include "Element.hpp"
 #include "SFML/Graphics/Font.hpp"
+#include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Graphics/Text.hpp"
 
 class Debug : public Element {
+    mutable sf::RectangleShape container;
     sf::Font font;
     mutable sf::Text text;
 

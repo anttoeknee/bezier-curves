@@ -11,7 +11,7 @@
 App::App(Config config)
     : config(),
       window(sf::VideoMode({
-                 config.windowHeight, config.windowWidth
+                 config.windowWidth, config.windowHeight
              }), "Bezier Curves", sf::Style::Titlebar | sf::Style::Close
       ) {
     window.setFramerateLimit(60);
