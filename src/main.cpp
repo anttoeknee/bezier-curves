@@ -1,5 +1,5 @@
 
-#include "../includes/App.h"
+#include "App.h"
 
 int main() {
     App app(Config::load());

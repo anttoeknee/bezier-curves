@@ -16,21 +16,21 @@ FetchContent_MakeAvailable(SFML)
 
 # Create the executable
 add_executable(main src/main.cpp src/App.cpp
-        includes/utils/Mem.h
-        includes/utils/Config.h
-        src/utils/Config.mm
+        src/core/utils/Mem.h
+        src/core/utils/Config.h
+        src/core/utils/Config.mm
         src/elements/Element.hpp
         src/elements/QuadraticBezier.cpp
-        src/core/math/Geometry.h
+        src/core/math/Geometry.hpp
         src/core/math/Geometry.cpp
         src/elements/QuadraticBezier.hpp
 )
 
 # Add platform-specific source
 if(APPLE)
-    target_sources(main PRIVATE src/utils/Mem.mm)
+    target_sources(main PRIVATE src/core/utils/Mem.mm)
 elseif(WIN32)
-    target_sources(main PRIVATE src/utils/Mem.cpp)
+    target_sources(main PRIVATE src/core/utils/Mem.cpp)
 endif()
 
 # Use C++17 and link SFML

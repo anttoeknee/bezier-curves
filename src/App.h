@@ -3,8 +3,8 @@
 
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/Graphics/Shape.hpp"
-#include "utils/Config.h"
-#include "../src/elements/Element.hpp"
+#include "core/utils/Config.h"
+#include "elements/Element.hpp"
 
 #endif //APP_H
 

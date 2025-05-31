@@ -1,14 +1,10 @@
-#include <SFML/Graphics/Rect.hpp>
-
-#include "../includes/App.h"
+#include "App.h"
 
 #include <iostream>
 
-#include "../includes/utils/Mem.h"
+#include "core/utils/Mem.h"
 #include "SFML/Graphics/Font.hpp"
-#include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Graphics/Text.hpp"
-#include "core/math/Geometry.h"
 #include "elements/Element.hpp"
 #include "elements/QuadraticBezier.hpp"
 
@@ -18,7 +14,6 @@ App::App(Config config)
                  config.windowHeight, config.windowWidth
              }), "Bezier Curves", sf::Style::Titlebar | sf::Style::Close
       ) {
-
     window.setFramerateLimit(60);
 
     // TODO: move to a scene object
@@ -91,6 +86,5 @@ void App::render() {
 }
 
 void App::update() {
-
     element->update(window);
 }

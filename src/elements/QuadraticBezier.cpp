@@ -3,7 +3,7 @@
 #include "Element.hpp"
 #include "QuadraticBezier.hpp"
 #include "SFML/Graphics/Vertex.hpp"
-#include "../core/math/Geometry.h"
+#include "../core/math/Geometry.hpp"
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Graphics/Shape.hpp"
 #include "SFML/Window/Mouse.hpp"

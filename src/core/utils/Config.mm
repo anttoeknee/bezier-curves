@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "../../includes/utils/Config.h"
+#include "Config.h"
 
 Config Config::load() {
     return {
