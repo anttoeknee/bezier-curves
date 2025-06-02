@@ -4,7 +4,7 @@
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/Graphics/Shape.hpp"
 #include "core/utils/Config.hpp"
-#include "scenes/Scene.hpp"
+#include "regions/Region.hpp"
 
 #endif //APP_H
 
@@ -27,5 +27,5 @@ private:
 
     void render();
 
-    std::vector<std::unique_ptr<Scene>> scenes;
+    std::vector<std::unique_ptr<Region>> scenes;
 };

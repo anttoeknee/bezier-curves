@@ -1,8 +1,8 @@
 #pragma once
-#include "Scene.hpp"
+#include "Region.hpp"
 #include "../elements/QuadraticBezier.hpp"
 
-class Bezier : public Scene {
+class Bezier : public Region {
     std::vector<PointData> startPoints{};
 
 public:

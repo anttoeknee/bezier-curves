@@ -5,7 +5,7 @@
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/Text.hpp"
 #include "elements/Element.hpp"
-#include "scenes/Bezier.hpp"
+#include "regions/Bezier.hpp"
 
 
 App::App(Config config)

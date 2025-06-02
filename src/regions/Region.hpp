@@ -3,10 +3,10 @@
 
 #include "../elements/Element.hpp"
 
-struct Scene {
+struct Region {
     std::vector<std::unique_ptr<Element> > elements;
 
-    explicit Scene() = default;
+    explicit Region() = default;
 
     virtual void draw(sf::RenderWindow &target) const = 0;
 
@@ -22,5 +22,5 @@ struct Scene {
 
     const std::vector<std::unique_ptr<Element> > &getElements() const { return elements; }
 
-    virtual ~Scene() = default;
+    virtual ~Region() = default;
 };
