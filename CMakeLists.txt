@@ -50,6 +50,8 @@ add_executable(main src/main.cpp src/App.cpp
         src/regions/Region.hpp
         src/regions/Bezier.cpp
         src/regions/Bezier.hpp
+        src/elements/divider.hpp
+        src/elements/Divider.cpp
 )
 
 # Add platform-specific source

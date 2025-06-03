@@ -4,6 +4,10 @@
 #include "../elements/Element.hpp"
 
 struct Region {
+
+    float x, y;
+    float width, height;
+
     std::vector<std::unique_ptr<Element> > elements;
 
     explicit Region() = default;
