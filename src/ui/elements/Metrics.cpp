@@ -30,7 +30,7 @@ void ui::elements::Metrics::memoryUsage(sf::Vector2f origin) const {
 
 void ui::elements::Metrics::mousePosition(sf::Vector2f mousePos) const {
 
-    mousePosText.setString("Mouse: " + std::to_string(std::round(mousePos.x * 100.0f) / 100.0f) + "," + std::to_string(std::round(mousePos.y * 100.0f) / 100.0f));
+    mousePosText.setString(std::format("Mouse (x,y): {:.0f},{:.0f}", mousePos.x, mousePos.y));
     mousePosText.setCharacterSize(16);
     mousePosText.setFillColor(sf::Color::Blue);
     mousePosText.setPosition({1090, 40}); // TODO: use origin from constructor when done

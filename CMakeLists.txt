@@ -64,8 +64,8 @@ elseif (WIN32)
     target_sources(main PRIVATE src/core/utils/Mem.cpp)
 endif ()
 
-# Use C++17 and link SFML + TGUI
-target_compile_features(main PRIVATE cxx_std_17)
+# Use C++20 and link SFML + TGUI
+target_compile_features(main PRIVATE cxx_std_20)
 target_link_libraries(main PRIVATE sfml-graphics)
 
 
