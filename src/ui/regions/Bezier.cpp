@@ -2,7 +2,7 @@
 #include "../elements/QuadraticBezier.hpp"
 #include "../elements/Metrics.hpp"
 #include "../elements/Divider.hpp"
-#include "../ui/utils/ScopedWindowClipping.hpp"
+#include "../utils/ScopedWindowClipping.hpp"
 
 Bezier::Bezier(sf::RenderWindow &target): Region(target) {
     position = {0, 0};

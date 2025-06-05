@@ -4,7 +4,7 @@
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/Graphics/Shape.hpp"
 #include "core/utils/Config.hpp"
-#include "regions/Region.hpp"
+#include "ui/regions/Region.hpp"
 
 #endif //APP_H
 

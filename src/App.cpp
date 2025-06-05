@@ -4,9 +4,9 @@
 
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/Text.hpp"
-#include "elements/Element.hpp"
-#include "regions/Bezier.hpp"
-#include "regions/Debug.hpp"
+#include "ui/elements/Element.hpp"
+#include "ui/regions/Bezier.hpp"
+#include "ui/regions/Debug.hpp"
 
 
 App::App(Config config)

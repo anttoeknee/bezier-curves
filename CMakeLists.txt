@@ -40,20 +40,20 @@ add_executable(main src/main.cpp src/App.cpp
         src/core/utils/Mem.hpp
         src/core/utils/Config.hpp
         src/core/utils/Config.mm
-        src/elements/Element.hpp
-        src/elements/QuadraticBezier.cpp
+        src/ui/elements/Element.hpp
+        src/ui/elements/QuadraticBezier.cpp
         src/core/math/Geometry.hpp
         src/core/math/Geometry.cpp
-        src/elements/QuadraticBezier.hpp
-        src/elements/Metrics.hpp
-        src/elements/Metrics.cpp
-        src/regions/Region.hpp
-        src/regions/Bezier.cpp
-        src/regions/Bezier.hpp
-        src/elements/Divider.hpp
-        src/elements/Divider.cpp
-        src/regions/Debug.hpp
-        src/regions/Debug.cpp
+        src/ui/elements/QuadraticBezier.hpp
+        src/ui/elements/Metrics.hpp
+        src/ui/elements/Metrics.cpp
+        src/ui/regions/Region.hpp
+        src/ui/regions/Bezier.cpp
+        src/ui/regions/Bezier.hpp
+        src/ui/elements/Divider.hpp
+        src/ui/elements/Divider.cpp
+        src/ui/regions/Debug.hpp
+        src/ui/regions/Debug.cpp
         src/ui/utils/ScopedWindowClipping.hpp
 )
 
