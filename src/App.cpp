@@ -9,7 +9,7 @@
 #include "ui/regions/Debug.hpp"
 
 
-App::App(Config config)
+App::App(core::utils::Config config)
     : config(),
       window(sf::VideoMode({
                  config.windowWidth, config.windowHeight
@@ -18,10 +18,10 @@ App::App(Config config)
     window.setFramerateLimit(60);
 
     // Bezier Curves
-    regions.push_back(std::make_unique<Bezier>(window));
+    regions.push_back(std::make_unique<ui::regions::Bezier>(window));
 
     // Debug
-    regions.push_back(std::make_unique<Debug>(window));
+    regions.push_back(std::make_unique<ui::regions::Debug>(window));
 }
 
 void App::run() {

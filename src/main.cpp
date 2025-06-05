@@ -2,6 +2,6 @@
 #include "App.hpp"
 
 int main() {
-    App app(Config::load());
+    App app(core::utils::Config::load());
     app.run();
 }

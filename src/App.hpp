@@ -10,11 +10,11 @@
 
 class App {
 public:
-    Config config;
+    core::utils::Config config;
 
     std::string title;
 
-    App(Config config);
+    App(core::utils::Config config);
 
     void run();
 
@@ -27,5 +27,5 @@ private:
 
     void render();
 
-    std::vector<std::unique_ptr<Region>> regions;
+    std::vector<std::unique_ptr<ui::regions::Region>> regions;
 };

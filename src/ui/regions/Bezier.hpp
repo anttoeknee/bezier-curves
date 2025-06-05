@@ -2,19 +2,22 @@
 #include "Region.hpp"
 #include "../elements/QuadraticBezier.hpp"
 
-class Bezier : public Region {
-    std::vector<PointData> startPoints{};
+namespace ui::regions {
+    class Bezier : public Region {
+        std::vector<elements::PointData> startPoints{};
 
-public:
-    explicit Bezier(sf::RenderWindow &target);
+    public:
+        explicit Bezier(sf::RenderWindow &target);
 
-    ~Bezier() override;
+        ~Bezier() override;
 
-    void handleMouseButtonReleased() override;
+        void handleMouseButtonReleased() override;
 
-    void handleMouseButtonPressed(sf::Vector2f &mousePos) override;
+        void handleMouseButtonPressed(sf::Vector2f &mousePos) override;
 
-    void draw() const override;
+        void draw() const override;
 
-    void update() const override;
-};
+        void update() const override;
+    };
+}
+

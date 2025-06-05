@@ -1,7 +1,7 @@
 
 #include "Config.hpp"
 
-Config Config::load() {
+core::utils::Config core::utils::Config::load() {
     return {
         1280u,
         800u,

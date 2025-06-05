@@ -3,33 +3,37 @@
 
 #include "../elements/Element.hpp"
 
-struct Region {
 
-    sf::Vector2f position;
-    sf::Vector2f size;
+namespace ui::regions {
+    struct Region {
 
-    std::vector<std::unique_ptr<Element> > elements;
+        sf::Vector2f position;
+        sf::Vector2f size;
 
-    sf::RenderWindow &target;
+        std::vector<std::unique_ptr<ui::elements::Element> > elements;
 
-    explicit Region(sf::RenderWindow &target);
+        sf::RenderWindow &target;
 
-    virtual void draw() const = 0;
+        explicit Region(sf::RenderWindow &target);
 
-    virtual void update() const = 0;
+        virtual void draw() const = 0;
 
-    void addElement(std::unique_ptr<Element> element) {
-        elements.push_back(std::move(element));
-    }
+        virtual void update() const = 0;
 
-    virtual void handleMouseButtonPressed(sf::Vector2f &mousePos) = 0;
+        void addElement(std::unique_ptr<ui::elements::Element> element) {
+            elements.push_back(std::move(element));
+        }
 
-    virtual void handleMouseButtonReleased() = 0;
+        virtual void handleMouseButtonPressed(sf::Vector2f &mousePos) = 0;
 
-    const std::vector<std::unique_ptr<Element> > &getElements() const { return elements; }
+        virtual void handleMouseButtonReleased() = 0;
 
-    virtual ~Region() = default;
-};
+        const std::vector<std::unique_ptr<ui::elements::Element> > &getElements() const { return elements; }
+
+        virtual ~Region() = default;
+    };
+}
+
 
 // TODO: maybe move this at a later date?
-inline Region::Region(sf::RenderWindow &target) : target(target) {}
+inline ui::regions::Region::Region(sf::RenderWindow &target) : target(target) {}

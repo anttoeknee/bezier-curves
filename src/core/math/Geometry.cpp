@@ -1,6 +1,6 @@
 #include "Geometry.hpp"
 
-sf::Vector2f math::quadraticBezier(
+sf::Vector2f core::math::quadraticBezier(
     const sf::Vector2f &p0,
     const sf::Vector2f &p1,
     const sf::Vector2f &p2,

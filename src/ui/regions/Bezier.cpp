@@ -4,37 +4,37 @@
 #include "../elements/Divider.hpp"
 #include "../utils/ScopedWindowClipping.hpp"
 
-Bezier::Bezier(sf::RenderWindow &target): Region(target) {
+ui::regions::Bezier::Bezier(sf::RenderWindow &target): Region(target) {
     position = {0, 0};
     size = {1080, 800};
 
-    std::vector<PointData> startPoints = {
+    std::vector<elements::PointData> startPoints = {
         {"Point 1", {50, 350}, {15, 15}},
         {"Point 2", {350, 50}, {15, 15}},
         {"Point 3", {850, 275}, {15, 15}}
     };
 
-    elements.push_back(std::make_unique<Divider>());
-    elements.push_back(std::make_unique<QuadraticBezier>(std::move(startPoints)));
+    elements.push_back(std::make_unique<elements::Divider>());
+    elements.push_back(std::make_unique<elements::QuadraticBezier>(std::move(startPoints)));
 }
 
-Bezier::~Bezier() = default;
+ui::regions::Bezier::~Bezier() = default;
 
 
-void Bezier::handleMouseButtonPressed(sf::Vector2f &mousePos) {
+void ui::regions::Bezier::handleMouseButtonPressed(sf::Vector2f &mousePos) {
     sf::Vector2f localMouse = mousePos - position;
     for (auto &element : elements) {
         element->handleMouseButtonPressed(localMouse);
     }
 }
 
-void Bezier::handleMouseButtonReleased() {
+void ui::regions::Bezier::handleMouseButtonReleased() {
     for (auto &element : elements) {
         element->handleMouseButtonReleased();
     }
 }
 
-void Bezier::draw() const {
+void ui::regions::Bezier::draw() const {
 
     sf::Vector2f windowSize = static_cast<sf::Vector2f>(target.getSize());
 
@@ -56,7 +56,7 @@ void Bezier::draw() const {
     target.setView(oldView);
 }
 
-void Bezier::update() const {
+void ui::regions::Bezier::update() const {
     for (auto &element : elements) {
         element->update(target, position);
     }

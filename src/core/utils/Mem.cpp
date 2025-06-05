@@ -2,7 +2,7 @@
 #include <Foundation/Foundation.h>
 #include "../../includes/utils/Mem.h"
 
-std::string getMemUsage() {
+std::string core::utils::getMemUsage() {
     return "Windows";
 }
 

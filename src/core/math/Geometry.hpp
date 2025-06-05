@@ -3,7 +3,7 @@
 
 #include <SFML/System/Vector2.hpp>
 
-namespace math {
+namespace core::math {
     sf::Vector2f quadraticBezier(
         const sf::Vector2f& p0,
         const sf::Vector2f& p1,

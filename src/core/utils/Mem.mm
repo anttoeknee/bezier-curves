@@ -3,7 +3,7 @@
 #include <Foundation/Foundation.h>
 #include "Mem.hpp"
 
-std::string getMemUsage() {
+std::string core::utils::getMemUsage() {
 
     // Get the current process's task info
     task_basic_info_data_t info;

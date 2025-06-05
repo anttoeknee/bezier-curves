@@ -3,21 +3,21 @@
 
 #include "SFML/Graphics/RectangleShape.hpp"
 
-void Divider::draw(sf::RenderWindow &target, sf::Vector2f origin) const {
+void ui::elements::Divider::draw(sf::RenderWindow &target, sf::Vector2f origin) const {
     target.draw(line);
 }
 
-void Divider::update(sf::RenderWindow &target, sf::Vector2f origin) const {
+void ui::elements::Divider::update(sf::RenderWindow &target, sf::Vector2f origin) const {
     // TODO: find way to pass values in
     line = sf::RectangleShape({1080, 1.f});
     line.setPosition({0, 401});
     line.setFillColor(sf::Color(150, 150, 150));
 }
 
-void Divider::handleMouseButtonPressed(sf::Vector2f &mousePos) {
+void ui::elements::Divider::handleMouseButtonPressed(sf::Vector2f &mousePos) {
 }
 
-void Divider::handleMouseButtonReleased() {
+void ui::elements::Divider::handleMouseButtonReleased() {
 }
 
-Divider::Divider() = default;
+ui::elements::Divider::Divider() = default;

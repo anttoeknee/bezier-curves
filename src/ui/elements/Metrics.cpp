@@ -3,13 +3,13 @@
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/Text.hpp"
 
-void Metrics::draw(sf::RenderWindow &target, sf::Vector2f origin) const {
+void ui::elements::Metrics::draw(sf::RenderWindow &target, sf::Vector2f origin) const {
     target.draw(text);
 }
 
-void Metrics::update(sf::RenderWindow &target, sf::Vector2f origin) const {
+void ui::elements::Metrics::update(sf::RenderWindow &target, sf::Vector2f origin) const {
 
-    std::string memUsage = getMemUsage();
+    std::string memUsage = core::utils::getMemUsage();
 
     text.setString("Memory usage: " + memUsage);
     text.setCharacterSize(16);
@@ -17,11 +17,11 @@ void Metrics::update(sf::RenderWindow &target, sf::Vector2f origin) const {
     text.setPosition({origin.x + 10, 10});
 }
 
-void Metrics::handleMouseButtonPressed(sf::Vector2f &mousePos) {
+void ui::elements::Metrics::handleMouseButtonPressed(sf::Vector2f &mousePos) {
 }
 
-void Metrics::handleMouseButtonReleased() {
+void ui::elements::Metrics::handleMouseButtonReleased() {
 }
 
-Metrics::Metrics(): font("/System/Library/Fonts/SFNS.ttf"), text(font) {
+ui::elements::Metrics::Metrics(): font("/System/Library/Fonts/SFNS.ttf"), text(font) {
 }

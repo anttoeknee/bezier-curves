@@ -9,7 +9,7 @@
 #include "SFML/Window/Mouse.hpp"
 
 
-QuadraticBezier::QuadraticBezier(std::vector<PointData> &&startPoints_)
+ui::elements::QuadraticBezier::QuadraticBezier(std::vector<PointData> &&startPoints_)
     : startPoints(std::move(startPoints_)) {
     // Initial state
     for (auto &point: startPoints) {
@@ -20,7 +20,7 @@ QuadraticBezier::QuadraticBezier(std::vector<PointData> &&startPoints_)
     }
 }
 
-void QuadraticBezier::draw(sf::RenderWindow &target, sf::Vector2f origin) const {
+void ui::elements::QuadraticBezier::draw(sf::RenderWindow &target, sf::Vector2f origin) const {
     // Control points
     for (auto &controlPoint: controlPoints) {
         target.draw(*controlPoint);
@@ -29,7 +29,7 @@ void QuadraticBezier::draw(sf::RenderWindow &target, sf::Vector2f origin) const 
     // Lines
     std::vector<sf::Vertex> bezierLine;
     for (float t = 0; t <= 1.0f; t += 0.01f) {
-        sf::Vector2f point = math::quadraticBezier(
+        sf::Vector2f point = core::math::quadraticBezier(
             controlPoints[0]->getPosition(),
             controlPoints[1]->getPosition(),
             controlPoints[2]->getPosition(),
@@ -41,7 +41,7 @@ void QuadraticBezier::draw(sf::RenderWindow &target, sf::Vector2f origin) const 
     target.draw(&bezierLine[0], bezierLine.size(), sf::PrimitiveType::LineStrip);
 }
 
-void QuadraticBezier::update(sf::RenderWindow &target, sf::Vector2f origin) const {
+void ui::elements::QuadraticBezier::update(sf::RenderWindow &target, sf::Vector2f origin) const {
     // Handle dragging
     if (isDragging && draggedShape) {
         sf::Vector2i mousePos = sf::Mouse::getPosition(target);
@@ -50,7 +50,7 @@ void QuadraticBezier::update(sf::RenderWindow &target, sf::Vector2f origin) cons
 }
 
 
-void QuadraticBezier::handleMouseButtonPressed(sf::Vector2f &mousePos) {
+void ui::elements::QuadraticBezier::handleMouseButtonPressed(sf::Vector2f &mousePos) {
     for (auto &controlPoint: controlPoints) {
         // Determine if we've mouse-downed on this shape
         if (controlPoint->getGlobalBounds().contains(mousePos)) {
@@ -66,7 +66,7 @@ void QuadraticBezier::handleMouseButtonPressed(sf::Vector2f &mousePos) {
     }
 }
 
-void QuadraticBezier::handleMouseButtonReleased() {
+void ui::elements::QuadraticBezier::handleMouseButtonReleased() {
     // Reset our bool and dragged shape
     isDragging = false;
     draggedShape = nullptr;
