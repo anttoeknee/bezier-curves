@@ -2,9 +2,9 @@
 #include "../elements/QuadraticBezier.hpp"
 #include "../elements/Metrics.hpp"
 #include "../elements/Divider.hpp"
+#include "../ui/utils/ScopedWindowClipping.hpp"
 
-Bezier::Bezier() {
-
+Bezier::Bezier(sf::RenderWindow &target): Region(target) {
     position = {0, 0};
     size = {1080, 800};
 
@@ -18,9 +18,13 @@ Bezier::Bezier() {
     elements.push_back(std::make_unique<QuadraticBezier>(std::move(startPoints)));
 }
 
-void Bezier::handleMouseButtonPressed(sf::Vector2i &mousePos) {
+Bezier::~Bezier() = default;
+
+
+void Bezier::handleMouseButtonPressed(sf::Vector2f &mousePos) {
+    sf::Vector2f localMouse = mousePos - position;
     for (auto &element : elements) {
-        element->handleMouseButtonPressed(mousePos);
+        element->handleMouseButtonPressed(localMouse);
     }
 }
 
@@ -30,9 +34,13 @@ void Bezier::handleMouseButtonReleased() {
     }
 }
 
-void Bezier::draw(sf::RenderWindow &target) const {
+void Bezier::draw() const {
 
-    //sf::View oldView = target.getView();
+    sf::Vector2f windowSize = static_cast<sf::Vector2f>(target.getSize());
+
+    sf::View oldView = target.getView();
+
+    ui::utils::ScopedWindowClipping clip(target, position, windowSize);
 
     sf::RectangleShape background;
     background.setPosition(position);
@@ -41,17 +49,14 @@ void Bezier::draw(sf::RenderWindow &target) const {
 
     target.draw(background);
 
-    //sf::View clipView(position + size * 0.5f, size); // sf::View is center-based
-    //target.setView(clipView);
-
     for (auto &element : elements) {
         element->draw(target, position);
     }
 
-    //target.setView(oldView);
+    target.setView(oldView);
 }
 
-void Bezier::update(sf::RenderWindow &target) const {
+void Bezier::update() const {
     for (auto &element : elements) {
         element->update(target, position);
     }

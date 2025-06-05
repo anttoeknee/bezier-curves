@@ -17,7 +17,7 @@ void Metrics::update(sf::RenderWindow &target, sf::Vector2f origin) const {
     text.setPosition({origin.x + 10, 10});
 }
 
-void Metrics::handleMouseButtonPressed(sf::Vector2i &mousePos) {
+void Metrics::handleMouseButtonPressed(sf::Vector2f &mousePos) {
 }
 
 void Metrics::handleMouseButtonReleased() {

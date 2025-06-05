@@ -6,13 +6,13 @@
 class Debug : public Region {
     mutable sf::RectangleShape container;
 public:
-    Debug();
+    explicit Debug(sf::RenderWindow &target);
 
     void handleMouseButtonReleased() override;
 
-    void handleMouseButtonPressed(sf::Vector2i &mousePos) override;
+    void handleMouseButtonPressed(sf::Vector2f &mousePos) override;
 
-    void draw(sf::RenderWindow &target) const override;
+    void draw() const override;
 
-    void update(sf::RenderWindow &target) const override;
+    void update() const override;
 };

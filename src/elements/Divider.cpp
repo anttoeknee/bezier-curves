@@ -14,7 +14,7 @@ void Divider::update(sf::RenderWindow &target, sf::Vector2f origin) const {
     line.setFillColor(sf::Color(150, 150, 150));
 }
 
-void Divider::handleMouseButtonPressed(sf::Vector2i &mousePos) {
+void Divider::handleMouseButtonPressed(sf::Vector2f &mousePos) {
 }
 
 void Divider::handleMouseButtonReleased() {

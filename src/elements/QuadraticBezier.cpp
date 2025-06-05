@@ -50,19 +50,16 @@ void QuadraticBezier::update(sf::RenderWindow &target, sf::Vector2f origin) cons
 }
 
 
-void QuadraticBezier::handleMouseButtonPressed(sf::Vector2i &mousePos) {
+void QuadraticBezier::handleMouseButtonPressed(sf::Vector2f &mousePos) {
     for (auto &controlPoint: controlPoints) {
         // Determine if we've mouse-downed on this shape
-        if (controlPoint->getGlobalBounds().contains({
-            static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)
-        })) {
+        if (controlPoint->getGlobalBounds().contains(mousePos)) {
             // Update our bool
             isDragging = true;
 
             // Make sure we don't get jumpy movement of the shape
             draggedShape = controlPoint.get();
-            dragOffset = sf::Vector2f(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)) - draggedShape->
-                         getPosition();
+            dragOffset = mousePos - draggedShape->getPosition();
 
             break;
         }

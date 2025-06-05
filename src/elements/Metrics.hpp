@@ -14,7 +14,7 @@ public:
 
     void update(sf::RenderWindow &target, sf::Vector2f origin) const override;
 
-    void handleMouseButtonPressed(sf::Vector2i &mousePos) override;
+    void handleMouseButtonPressed(sf::Vector2f &mousePos) override;
 
     void handleMouseButtonReleased() override;
 

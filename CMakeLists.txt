@@ -54,6 +54,7 @@ add_executable(main src/main.cpp src/App.cpp
         src/elements/Divider.cpp
         src/regions/Debug.hpp
         src/regions/Debug.cpp
+        src/ui/utils/ScopedWindowClipping.hpp
 )
 
 # Add platform-specific source

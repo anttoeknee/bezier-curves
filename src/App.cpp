@@ -18,10 +18,10 @@ App::App(Config config)
     window.setFramerateLimit(60);
 
     // Bezier Curves
-    regions.push_back(std::make_unique<Bezier>());
+    regions.push_back(std::make_unique<Bezier>(window));
 
     // Debug
-    regions.push_back(std::make_unique<Debug>());
+    regions.push_back(std::make_unique<Debug>(window));
 }
 
 void App::run() {
@@ -42,7 +42,7 @@ void App::handleEvents() {
 
         // Handle mouse down
         if (event->is<sf::Event::MouseButtonPressed>()) {
-            sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+            sf::Vector2f mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
             for (auto &scene: regions) {
                 scene->handleMouseButtonPressed(mousePos);
             }
@@ -61,13 +61,13 @@ void App::render() {
     window.clear();
 
     for (auto &scene: regions) {
-        scene->draw(window);
+        scene->draw();
     }
     window.display();
 }
 
 void App::update() {
     for (auto &scene: regions) {
-        scene->update(window);
+        scene->update();
     }
 }

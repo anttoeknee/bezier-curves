@@ -3,7 +3,7 @@
 #include "Debug.hpp"
 #include "../elements/Metrics.hpp"
 
-Debug::Debug() {
+Debug::Debug(sf::RenderWindow &target): Region(target) {
     position = {1080, 0};
     size = {200, 800};
 
@@ -11,7 +11,7 @@ Debug::Debug() {
     elements.push_back(std::make_unique<Metrics>());
 }
 
-void Debug::draw(sf::RenderWindow &target) const {
+void Debug::draw() const {
     target.draw(container);
 
     for (auto &element : elements) {
@@ -19,7 +19,7 @@ void Debug::draw(sf::RenderWindow &target) const {
     }
 }
 
-void Debug::update(sf::RenderWindow &target) const {
+void Debug::update() const {
 
     container = sf::RectangleShape(size);
     container.setPosition(position);
@@ -30,7 +30,7 @@ void Debug::update(sf::RenderWindow &target) const {
     }
 }
 
-void Debug::handleMouseButtonPressed(sf::Vector2i &mousePos) {
+void Debug::handleMouseButtonPressed(sf::Vector2f &mousePos) {
     for (auto &element : elements) {
         element->handleMouseButtonPressed(mousePos);
     }

@@ -6,13 +6,15 @@ class Bezier : public Region {
     std::vector<PointData> startPoints{};
 
 public:
-    Bezier();
+    explicit Bezier(sf::RenderWindow &target);
+
+    ~Bezier() override;
 
     void handleMouseButtonReleased() override;
 
-    void handleMouseButtonPressed(sf::Vector2i &mousePos) override;
+    void handleMouseButtonPressed(sf::Vector2f &mousePos) override;
 
-    void draw(sf::RenderWindow &target) const override;
+    void draw() const override;
 
-    void update(sf::RenderWindow &target) const override;
+    void update() const override;
 };

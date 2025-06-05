@@ -6,7 +6,7 @@ struct Element {
 
     virtual void update(sf::RenderWindow &target, sf::Vector2f origin) const = 0;
 
-    virtual void handleMouseButtonPressed(sf::Vector2i &mousePos) = 0;
+    virtual void handleMouseButtonPressed(sf::Vector2f &mousePos) = 0;
 
     virtual void handleMouseButtonReleased() = 0;
 
