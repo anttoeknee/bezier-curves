@@ -5,8 +5,8 @@
 
 struct Region {
 
-    float x, y;
-    float width, height;
+    sf::Vector2f position;
+    sf::Vector2f size;
 
     std::vector<std::unique_ptr<Element> > elements;
 

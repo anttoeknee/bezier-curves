@@ -2,9 +2,9 @@
 #include "SFML/Graphics/RenderWindow.hpp"
 
 struct Element {
-    virtual void draw(sf::RenderWindow &target) const = 0;
+    virtual void draw(sf::RenderWindow &target, sf::Vector2f origin) const = 0;
 
-    virtual void update(sf::RenderWindow &target) const = 0;
+    virtual void update(sf::RenderWindow &target, sf::Vector2f origin) const = 0;
 
     virtual void handleMouseButtonPressed(sf::Vector2i &mousePos) = 0;
 

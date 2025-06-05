@@ -19,9 +19,9 @@ class QuadraticBezier : public Element {
 public:
     explicit QuadraticBezier(std::vector<PointData> &&startPoints);
 
-    void draw(sf::RenderWindow &target) const override;
+    void draw(sf::RenderWindow &target, sf::Vector2f origin) const override;
 
-    void update(sf::RenderWindow &target) const override;
+    void update(sf::RenderWindow &target, sf::Vector2f origin) const override;
 
     void handleMouseButtonPressed(sf::Vector2i &mousePos) override;
 

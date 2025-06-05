@@ -4,19 +4,19 @@
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Graphics/Text.hpp"
 
-class Debug : public Element {
+class Metrics : public Element {
     mutable sf::RectangleShape container;
     sf::Font font;
     mutable sf::Text text;
 
 public:
-    void draw(sf::RenderWindow &target) const override;
+    void draw(sf::RenderWindow &target, sf::Vector2f origin) const override;
 
-    void update(sf::RenderWindow &target) const override;
+    void update(sf::RenderWindow &target, sf::Vector2f origin) const override;
 
     void handleMouseButtonPressed(sf::Vector2i &mousePos) override;
 
     void handleMouseButtonReleased() override;
 
-    Debug();
+    Metrics();
 };

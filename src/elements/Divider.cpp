@@ -3,11 +3,11 @@
 
 #include "SFML/Graphics/RectangleShape.hpp"
 
-void Divider::draw(sf::RenderWindow &target) const {
+void Divider::draw(sf::RenderWindow &target, sf::Vector2f origin) const {
     target.draw(line);
 }
 
-void Divider::update(sf::RenderWindow &target) const {
+void Divider::update(sf::RenderWindow &target, sf::Vector2f origin) const {
     // TODO: find way to pass values in
     line = sf::RectangleShape({1080, 1.f});
     line.setPosition({0, 401});

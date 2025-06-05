@@ -45,13 +45,15 @@ add_executable(main src/main.cpp src/App.cpp
         src/core/math/Geometry.hpp
         src/core/math/Geometry.cpp
         src/elements/QuadraticBezier.hpp
-        src/elements/Debug.hpp
-        src/elements/Debug.cpp
+        src/elements/Metrics.hpp
+        src/elements/Metrics.cpp
         src/regions/Region.hpp
         src/regions/Bezier.cpp
         src/regions/Bezier.hpp
-        src/elements/divider.hpp
+        src/elements/Divider.hpp
         src/elements/Divider.cpp
+        src/regions/Debug.hpp
+        src/regions/Debug.cpp
 )
 
 # Add platform-specific source

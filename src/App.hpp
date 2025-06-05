@@ -27,5 +27,5 @@ private:
 
     void render();
 
-    std::vector<std::unique_ptr<Region>> scenes;
+    std::vector<std::unique_ptr<Region>> regions;
 };

@@ -20,7 +20,7 @@ QuadraticBezier::QuadraticBezier(std::vector<PointData> &&startPoints_)
     }
 }
 
-void QuadraticBezier::draw(sf::RenderWindow &target) const {
+void QuadraticBezier::draw(sf::RenderWindow &target, sf::Vector2f origin) const {
     // Control points
     for (auto &controlPoint: controlPoints) {
         target.draw(*controlPoint);
@@ -41,7 +41,7 @@ void QuadraticBezier::draw(sf::RenderWindow &target) const {
     target.draw(&bezierLine[0], bezierLine.size(), sf::PrimitiveType::LineStrip);
 }
 
-void QuadraticBezier::update(sf::RenderWindow &target) const {
+void QuadraticBezier::update(sf::RenderWindow &target, sf::Vector2f origin) const {
     // Handle dragging
     if (isDragging && draggedShape) {
         sf::Vector2i mousePos = sf::Mouse::getPosition(target);

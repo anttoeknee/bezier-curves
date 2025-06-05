@@ -6,9 +6,9 @@
 class Divider : public Element {
     mutable sf::RectangleShape line;
 public:
-    void draw(sf::RenderWindow &target) const override;
+    void draw(sf::RenderWindow &target, sf::Vector2f origin) const override;
 
-    void update(sf::RenderWindow &target) const override;
+    void update(sf::RenderWindow &target, sf::Vector2f origin) const override;
 
     void handleMouseButtonPressed(sf::Vector2i &mousePos) override;
 

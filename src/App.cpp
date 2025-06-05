@@ -6,6 +6,7 @@
 #include "SFML/Graphics/Text.hpp"
 #include "elements/Element.hpp"
 #include "regions/Bezier.hpp"
+#include "regions/Debug.hpp"
 
 
 App::App(Config config)
@@ -17,7 +18,10 @@ App::App(Config config)
     window.setFramerateLimit(60);
 
     // Bezier Curves
-    scenes.push_back(std::make_unique<Bezier>());
+    regions.push_back(std::make_unique<Bezier>());
+
+    // Debug
+    regions.push_back(std::make_unique<Debug>());
 }
 
 void App::run() {
@@ -39,14 +43,14 @@ void App::handleEvents() {
         // Handle mouse down
         if (event->is<sf::Event::MouseButtonPressed>()) {
             sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-            for (auto &scene: scenes) {
+            for (auto &scene: regions) {
                 scene->handleMouseButtonPressed(mousePos);
             }
         }
 
         // Handle mouse release
         if (event->is<sf::Event::MouseButtonReleased>()) {
-            for (auto &scene: scenes) {
+            for (auto &scene: regions) {
                 scene->handleMouseButtonReleased();
             }
         }
@@ -56,14 +60,14 @@ void App::handleEvents() {
 void App::render() {
     window.clear();
 
-    for (auto &scene: scenes) {
+    for (auto &scene: regions) {
         scene->draw(window);
     }
     window.display();
 }
 
 void App::update() {
-    for (auto &scene: scenes) {
+    for (auto &scene: regions) {
         scene->update(window);
     }
 }
