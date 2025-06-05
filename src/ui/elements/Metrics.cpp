@@ -5,6 +5,8 @@
 
 // TODO: pass origin from region into constructor
 ui::elements::Metrics::Metrics(): font("/System/Library/Fonts/SFNS.ttf"), memText(font), mousePosText(font) {
+    // TODO: see if we can get the position before onMove
+    mousePosition({0, 0});
 }
 
 void ui::elements::Metrics::draw(sf::RenderWindow &target, sf::Vector2f origin) const {
@@ -14,9 +16,6 @@ void ui::elements::Metrics::draw(sf::RenderWindow &target, sf::Vector2f origin) 
 
 void ui::elements::Metrics::update(sf::RenderWindow &target, sf::Vector2f origin) const {
     memoryUsage(origin);
-
-    // TODO: see if we can get the position before onMove
-    //mousePosition({0, 0});
 }
 
 void ui::elements::Metrics::memoryUsage(sf::Vector2f origin) const {

@@ -1,12 +1,17 @@
 #pragma once
+
 #include "Element.hpp"
 #include "SFML/Graphics/Shape.hpp"
+#include <vector>
+#include <memory>
+#include <string>
+
 #include "../common/Point.hpp"
 
 namespace ui::elements {
 
-    class QuadraticBezier : public Element {
-        std::vector<std::unique_ptr<sf::Shape> > controlPoints;
+    class LerpBezier : public Element {
+        std::vector<std::unique_ptr<sf::Shape>> controlPoints;
         std::vector<common::Point> startPoints;
 
         bool isDragging = false;
@@ -14,7 +19,7 @@ namespace ui::elements {
         sf::Vector2f dragOffset;
 
     public:
-        explicit QuadraticBezier(std::vector<common::Point> &&startPoints);
+        explicit LerpBezier(std::vector<common::Point> &&startPoints);
 
         void draw(sf::RenderWindow &target, sf::Vector2f origin) const override;
 

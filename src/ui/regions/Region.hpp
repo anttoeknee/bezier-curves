@@ -17,8 +17,8 @@ namespace ui::regions {
      * The App is then responsible for drawing the Regions
      */
     struct Region {
-        sf::Vector2f position;
-        sf::Vector2f size;
+        sf::Vector2f _position;
+        sf::Vector2f _size;
 
         std::vector<std::unique_ptr<elements::Element> > elements;
 

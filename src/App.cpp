@@ -5,7 +5,7 @@
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/Text.hpp"
 #include "ui/elements/Element.hpp"
-#include "ui/regions/Bezier.hpp"
+#include "ui/regions/Canvas.hpp"
 #include "ui/regions/Debug.hpp"
 
 
@@ -18,7 +18,8 @@ App::App(core::utils::Config config)
     window.setFramerateLimit(60);
 
     // Bezier Curves
-    regions.push_back(std::make_unique<ui::regions::Bezier>(window));
+    regions.push_back(std::make_unique<ui::regions::Canvas>(window, sf::Vector2f{0, 0}, sf::Vector2f{1080, 400}));
+    regions.push_back(std::make_unique<ui::regions::Canvas>(window, sf::Vector2f{0, 401}, sf::Vector2f{1080, 400}));
 
     // Debug
     regions.push_back(std::make_unique<ui::regions::Debug>(window));

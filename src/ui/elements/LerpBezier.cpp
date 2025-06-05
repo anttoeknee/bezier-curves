@@ -1,3 +1,5 @@
+#include "LerpBezier.hpp"
+
 #include <vector>
 
 #include "Element.hpp"
@@ -9,7 +11,7 @@
 #include "SFML/Window/Mouse.hpp"
 
 
-ui::elements::QuadraticBezier::QuadraticBezier(std::vector<common::Point> &&startPoints_)
+ui::elements::LerpBezier::LerpBezier(std::vector<common::Point> &&startPoints_)
     : startPoints(std::move(startPoints_)) {
 
     // Initial state
@@ -21,28 +23,28 @@ ui::elements::QuadraticBezier::QuadraticBezier(std::vector<common::Point> &&star
     }
 }
 
-void ui::elements::QuadraticBezier::draw(sf::RenderWindow &target, sf::Vector2f origin) const {
+void ui::elements::LerpBezier::draw(sf::RenderWindow &target, sf::Vector2f origin) const {
     // Control points
     for (auto &controlPoint: controlPoints) {
         target.draw(*controlPoint);
     }
 
-    // Lines
-    std::vector<sf::Vertex> bezierLine;
-    for (float t = 0; t <= 1.0f; t += 0.01f) {
-        sf::Vector2f point = core::math::quadraticBezier(
-            controlPoints[0]->getPosition(),
-            controlPoints[1]->getPosition(),
-            controlPoints[2]->getPosition(),
-            t
-        );
-        bezierLine.push_back(sf::Vertex({point, sf::Color::White}));
-    }
-
-    target.draw(&bezierLine[0], bezierLine.size(), sf::PrimitiveType::LineStrip);
+    // // Lines
+    // std::vector<sf::Vertex> bezierLine;
+    // for (float t = 0; t <= 1.0f; t += 0.01f) {
+    //     sf::Vector2f point = core::math::quadraticBezier(
+    //         controlPoints[0]->getPosition(),
+    //         controlPoints[1]->getPosition(),
+    //         controlPoints[2]->getPosition(),
+    //         t
+    //     );
+    //     bezierLine.push_back(sf::Vertex({point, sf::Color::White}));
+    // }
+    //
+    // target.draw(&bezierLine[0], bezierLine.size(), sf::PrimitiveType::LineStrip);
 }
 
-void ui::elements::QuadraticBezier::update(sf::RenderWindow &target, sf::Vector2f origin) const {
+void ui::elements::LerpBezier::update(sf::RenderWindow &target, sf::Vector2f origin) const {
     // Handle dragging
     if (isDragging && draggedShape) {
         sf::Vector2i mousePos = sf::Mouse::getPosition(target);
@@ -50,12 +52,12 @@ void ui::elements::QuadraticBezier::update(sf::RenderWindow &target, sf::Vector2
     }
 }
 
-void ui::elements::QuadraticBezier::handleMouseMove(sf::Vector2f &mousePos) {
+void ui::elements::LerpBezier::handleMouseMove(sf::Vector2f &mousePos) {
 
 }
 
 
-void ui::elements::QuadraticBezier::handleMouseButtonPressed(sf::Vector2f &mousePos) {
+void ui::elements::LerpBezier::handleMouseButtonPressed(sf::Vector2f &mousePos) {
     for (auto &controlPoint: controlPoints) {
         // Determine if we've mouse-downed on this shape
         if (controlPoint->getGlobalBounds().contains(mousePos)) {
@@ -71,7 +73,7 @@ void ui::elements::QuadraticBezier::handleMouseButtonPressed(sf::Vector2f &mouse
     }
 }
 
-void ui::elements::QuadraticBezier::handleMouseButtonReleased() {
+void ui::elements::LerpBezier::handleMouseButtonReleased() {
     // Reset our bool and dragged shape
     isDragging = false;
     draggedShape = nullptr;

@@ -48,13 +48,16 @@ add_executable(main src/main.cpp src/App.cpp
         src/ui/elements/Metrics.hpp
         src/ui/elements/Metrics.cpp
         src/ui/regions/Region.hpp
-        src/ui/regions/Bezier.cpp
-        src/ui/regions/Bezier.hpp
+        src/ui/regions/Canvas.cpp
+        src/ui/regions/Canvas.hpp
         src/ui/elements/Divider.hpp
         src/ui/elements/Divider.cpp
         src/ui/regions/Debug.hpp
         src/ui/regions/Debug.cpp
         src/ui/utils/ScopedWindowClipping.hpp
+        src/ui/elements/LerpBezier.hpp
+        src/ui/elements/LerpBezier.cpp
+        src/ui/common/Point.hpp
 )
 
 # Add platform-specific source

@@ -4,8 +4,8 @@
 #include "../elements/Metrics.hpp"
 
 ui::regions::Debug::Debug(sf::RenderWindow &target): Region(target) {
-    position = {1080, 0};
-    size = {200, 800};
+    _position = {1080, 0};
+    _size = {200, 800};
 
     // Mem usage, mouse position etc
     elements.push_back(std::make_unique<elements::Metrics>());
@@ -15,18 +15,18 @@ void ui::regions::Debug::draw() const {
     target.draw(container);
 
     for (auto &element : elements) {
-        element->draw(target, position);
+        element->draw(target, _position);
     }
 }
 
 void ui::regions::Debug::update() const {
 
-    container = sf::RectangleShape(size);
-    container.setPosition(position);
+    container = sf::RectangleShape(_size);
+    container.setPosition(_position);
     container.setFillColor(sf::Color::White);
 
     for (auto &element : elements) {
-        element->update(target, position);
+        element->update(target, _position);
     }
 }
 

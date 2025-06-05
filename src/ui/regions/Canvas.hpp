@@ -3,13 +3,13 @@
 #include "../elements/QuadraticBezier.hpp"
 
 namespace ui::regions {
-    class Bezier : public Region {
-        std::vector<elements::PointData> startPoints{};
+    class Canvas : public Region {
+        std::vector<common::Point> startPoints{};
 
     public:
-        explicit Bezier(sf::RenderWindow &target);
+        explicit Canvas(sf::RenderWindow &target, sf::Vector2f position, sf::Vector2f size);
 
-        ~Bezier() override;
+        ~Canvas() override;
 
         void handleMouseMove(sf::Vector2f &mousePos) override;
 
