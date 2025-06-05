@@ -11,6 +11,8 @@ namespace ui::regions {
 
         ~Bezier() override;
 
+        void handleMouseMove(sf::Vector2f &mousePos) override;
+
         void handleMouseButtonReleased() override;
 
         void handleMouseButtonPressed(sf::Vector2f &mousePos) override;

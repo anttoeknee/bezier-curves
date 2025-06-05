@@ -20,6 +20,8 @@ ui::regions::Bezier::Bezier(sf::RenderWindow &target): Region(target) {
 
 ui::regions::Bezier::~Bezier() = default;
 
+void ui::regions::Bezier::handleMouseMove(sf::Vector2f &mousePos) {
+}
 
 void ui::regions::Bezier::handleMouseButtonPressed(sf::Vector2f &mousePos) {
     sf::Vector2f localMouse = mousePos - position;
@@ -40,7 +42,7 @@ void ui::regions::Bezier::draw() const {
 
     sf::View oldView = target.getView();
 
-    ui::utils::ScopedWindowClipping clip(target, position, windowSize);
+    utils::ScopedWindowClipping clip(target, position, windowSize);
 
     sf::RectangleShape background;
     background.setPosition(position);

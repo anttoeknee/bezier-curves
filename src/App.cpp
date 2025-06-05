@@ -40,18 +40,26 @@ void App::handleEvents() {
             window.close();
         }
 
+        // Handle mouse move
+        if (event->is<sf::Event::MouseMoved>()) {
+            sf::Vector2f mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
+            for (auto& region : regions) {
+                region->handleMouseMove(mousePos);
+            }
+        }
+
         // Handle mouse down
         if (event->is<sf::Event::MouseButtonPressed>()) {
             sf::Vector2f mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
-            for (auto &scene: regions) {
-                scene->handleMouseButtonPressed(mousePos);
+            for (auto &region: regions) {
+                region->handleMouseButtonPressed(mousePos);
             }
         }
 
         // Handle mouse release
         if (event->is<sf::Event::MouseButtonReleased>()) {
-            for (auto &scene: regions) {
-                scene->handleMouseButtonReleased();
+            for (auto &region: regions) {
+                region->handleMouseButtonReleased();
             }
         }
     }
@@ -60,14 +68,14 @@ void App::handleEvents() {
 void App::render() {
     window.clear();
 
-    for (auto &scene: regions) {
-        scene->draw();
+    for (auto &region: regions) {
+        region->draw();
     }
     window.display();
 }
 
 void App::update() {
-    for (auto &scene: regions) {
-        scene->update();
+    for (auto &region: regions) {
+        region->update();
     }
 }

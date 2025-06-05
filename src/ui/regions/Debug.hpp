@@ -9,6 +9,8 @@ namespace ui::regions {
     public:
         explicit Debug(sf::RenderWindow &target);
 
+        void handleMouseMove(sf::Vector2f &mousePos) override;
+
         void handleMouseButtonReleased() override;
 
         void handleMouseButtonPressed(sf::Vector2f &mousePos) override;

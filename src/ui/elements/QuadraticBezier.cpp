@@ -49,6 +49,10 @@ void ui::elements::QuadraticBezier::update(sf::RenderWindow &target, sf::Vector2
     }
 }
 
+void ui::elements::QuadraticBezier::handleMouseMove(sf::Vector2f &mousePos) {
+
+}
+
 
 void ui::elements::QuadraticBezier::handleMouseButtonPressed(sf::Vector2f &mousePos) {
     for (auto &controlPoint: controlPoints) {

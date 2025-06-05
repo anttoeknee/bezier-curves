@@ -11,6 +11,8 @@ namespace ui::utils {
      * rendering operations are clipped to the specified region for the lifetime of the object.
      *
      * Usage of this class follows the RAII principle.
+     *
+     * @note This is intended to be used inside a draw loop!
      */
     class ScopedWindowClipping {
         sf::RenderWindow &target;

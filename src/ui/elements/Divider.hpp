@@ -11,6 +11,8 @@ namespace ui::elements {
 
         void update(sf::RenderWindow &target, sf::Vector2f origin) const override;
 
+        void handleMouseMove(sf::Vector2f &mousePos) override;
+
         void handleMouseButtonPressed(sf::Vector2f &mousePos) override;
 
         void handleMouseButtonReleased() override;

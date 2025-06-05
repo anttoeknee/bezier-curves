@@ -7,6 +7,8 @@ namespace ui::elements {
 
         virtual void update(sf::RenderWindow &target, sf::Vector2f origin) const = 0;
 
+        virtual void handleMouseMove(sf::Vector2f &mousePos) = 0;
+
         virtual void handleMouseButtonPressed(sf::Vector2f &mousePos) = 0;
 
         virtual void handleMouseButtonReleased() = 0;

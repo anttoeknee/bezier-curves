@@ -14,6 +14,9 @@ void ui::elements::Divider::update(sf::RenderWindow &target, sf::Vector2f origin
     line.setFillColor(sf::Color(150, 150, 150));
 }
 
+void ui::elements::Divider::handleMouseMove(sf::Vector2f &mousePos) {
+}
+
 void ui::elements::Divider::handleMouseButtonPressed(sf::Vector2f &mousePos) {
 }
 

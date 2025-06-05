@@ -30,6 +30,12 @@ void ui::regions::Debug::update() const {
     }
 }
 
+void ui::regions::Debug::handleMouseMove(sf::Vector2f &mousePos) {
+    for (auto &element : elements) {
+        element->handleMouseMove(mousePos);
+    }
+}
+
 void ui::regions::Debug::handleMouseButtonPressed(sf::Vector2f &mousePos) {
     for (auto &element : elements) {
         element->handleMouseButtonPressed(mousePos);
