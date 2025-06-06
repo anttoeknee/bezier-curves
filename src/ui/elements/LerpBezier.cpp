@@ -29,19 +29,19 @@ void ui::elements::LerpBezier::draw(sf::RenderWindow &target, sf::Vector2f origi
         target.draw(*controlPoint);
     }
 
-    // // Lines
-    // std::vector<sf::Vertex> bezierLine;
-    // for (float t = 0; t <= 1.0f; t += 0.01f) {
-    //     sf::Vector2f point = core::math::quadraticBezier(
-    //         controlPoints[0]->getPosition(),
-    //         controlPoints[1]->getPosition(),
-    //         controlPoints[2]->getPosition(),
-    //         t
-    //     );
-    //     bezierLine.push_back(sf::Vertex({point, sf::Color::White}));
-    // }
-    //
-    // target.draw(&bezierLine[0], bezierLine.size(), sf::PrimitiveType::LineStrip);
+    // Lines
+    sf::Vector2f lerpCp1Cp2 = core::math::lerp(controlPoints[0]->getPosition(), controlPoints[1]->getPosition(), 0.5f);
+    sf::Vector2f lerpCp2Cp3 = core::math::lerp(controlPoints[1]->getPosition(), controlPoints[2]->getPosition(), 0.5f);
+    sf::Vector2f finalLerp = core::math::lerp(lerpCp1Cp2, lerpCp2Cp3, 0.5f);
+
+    std::vector<sf::Vertex> bezierLine;
+    bezierLine.push_back(sf::Vertex({lerpCp1Cp2, sf::Color::White}));
+    //bezierLine.push_back(sf::Vertex({lerpCp2Cp3, sf::Color::White}));
+    //bezierLine.push_back(sf::Vertex({finalLerp, sf::Color::White}));
+
+    target.draw(&bezierLine[0], bezierLine.size(), sf::PrimitiveType::LineStrip);
+    //target.draw(&bezierLine[1], bezierLine.size(), sf::PrimitiveType::LineStrip);
+    //target.draw(&bezierLine[2], bezierLine.size(), sf::PrimitiveType::LineStrip);
 }
 
 void ui::elements::LerpBezier::update(sf::RenderWindow &target, sf::Vector2f origin) const {
