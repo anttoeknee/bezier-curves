@@ -3,6 +3,7 @@
 
 namespace ui::elements {
     struct Element {
+
         virtual void draw(sf::RenderWindow &target, sf::Vector2f origin) const = 0;
 
         virtual void update(sf::RenderWindow &target, sf::Vector2f origin) const = 0;

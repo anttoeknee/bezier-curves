@@ -16,8 +16,8 @@ ui::regions::Canvas::Canvas(sf::RenderWindow &target, sf::Vector2f position, sf:
     };
 
     std::vector<common::Point> startPoints2 = {
-        {"Point 3", {100, 450}, {15, 15}},
-        {"Point 4", {600, 525}, {15, 15}},
+        {"Point 3", {100, 750}, {15, 15}},
+        {"Point 4", {750, 425}, {15, 15}},
         {"Point 5", {850, 755}, {15, 15}}
     };
 
@@ -50,7 +50,7 @@ void ui::regions::Canvas::draw() const {
 
     sf::View oldView = target.getView();
 
-    utils::ScopedWindowClipping clip(target, _position, windowSize);
+    utils::ScopedWindowClipping sWinClip(target, _position, windowSize);
 
     sf::RectangleShape background;
     background.setPosition(_position);

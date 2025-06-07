@@ -5,6 +5,7 @@
 namespace ui::regions {
     class Canvas : public Region {
         std::vector<common::Point> startPoints{};
+        mutable sf::View clippedView;
 
     public:
         explicit Canvas(sf::RenderWindow &target, sf::Vector2f position, sf::Vector2f size);

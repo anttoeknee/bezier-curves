@@ -13,7 +13,6 @@
 
 ui::elements::LerpBezier::LerpBezier(std::vector<common::Point> &&startPoints_)
     : startPoints(std::move(startPoints_)) {
-
     // Initial state
     for (auto &point: startPoints) {
         sf::RectangleShape rect(sf::Vector2f(point.size.x, point.size.y));
@@ -29,19 +28,34 @@ void ui::elements::LerpBezier::draw(sf::RenderWindow &target, sf::Vector2f origi
         target.draw(*controlPoint);
     }
 
-    // Lines
-    sf::Vector2f lerpCp1Cp2 = core::math::lerp(controlPoints[0]->getPosition(), controlPoints[1]->getPosition(), 0.5f);
-    sf::Vector2f lerpCp2Cp3 = core::math::lerp(controlPoints[1]->getPosition(), controlPoints[2]->getPosition(), 0.5f);
-    sf::Vector2f finalLerp = core::math::lerp(lerpCp1Cp2, lerpCp2Cp3, 0.5f);
+    // Rather than iterate a float up to 1.0f, instead define steps and compute the increment.
+    // This will avoid rounding quirks.
+    int steps = 10;
+    for (int i = 0; i <= steps; ++i) {
+        float t = static_cast<float>(i) / steps;
 
-    std::vector<sf::Vertex> bezierLine;
-    bezierLine.push_back(sf::Vertex({lerpCp1Cp2, sf::Color::White}));
-    //bezierLine.push_back(sf::Vertex({lerpCp2Cp3, sf::Color::White}));
-    //bezierLine.push_back(sf::Vertex({finalLerp, sf::Color::White}));
+        // Midpoint, points 1 - 2
+        sf::Vector2f midPointA = core::math::lerp(controlPoints[0]->getPosition(), controlPoints[1]->getPosition(), t);
+        sf::RectangleShape rectMidPointA{sf::Vector2f(5, 5)};
+        rectMidPointA.setPosition(midPointA);
+        rectMidPointA.setFillColor(sf::Color::Green);
+        target.draw(rectMidPointA);
 
-    target.draw(&bezierLine[0], bezierLine.size(), sf::PrimitiveType::LineStrip);
-    //target.draw(&bezierLine[1], bezierLine.size(), sf::PrimitiveType::LineStrip);
-    //target.draw(&bezierLine[2], bezierLine.size(), sf::PrimitiveType::LineStrip);
+        // Midpoint, points 2 - 3
+        sf::Vector2f midPointB = core::math::lerp(controlPoints[1]->getPosition(), controlPoints[2]->getPosition(), t);
+        sf::RectangleShape rectMidPointB{sf::Vector2f(5, 5)};
+        rectMidPointB.setPosition(midPointB);
+        rectMidPointB.setFillColor(sf::Color::Green);
+        target.draw(rectMidPointB);
+
+        // Draw a line between our midpoints by defining the line using two vertices
+        sf::Vertex line[] = {
+            sf::Vertex(midPointA, sf::Color::Cyan),
+            sf::Vertex(midPointB, sf::Color::Cyan)
+        };
+
+        target.draw(line, 2, sf::PrimitiveType::Lines);
+    }
 }
 
 void ui::elements::LerpBezier::update(sf::RenderWindow &target, sf::Vector2f origin) const {
@@ -56,9 +70,9 @@ void ui::elements::LerpBezier::handleMouseMove(sf::Vector2f &mousePos) {
 
 }
 
-
 void ui::elements::LerpBezier::handleMouseButtonPressed(sf::Vector2f &mousePos) {
     for (auto &controlPoint: controlPoints) {
+
         // Determine if we've mouse-downed on this shape
         if (controlPoint->getGlobalBounds().contains(mousePos)) {
             // Update our bool

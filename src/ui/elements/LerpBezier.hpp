@@ -4,7 +4,6 @@
 #include "SFML/Graphics/Shape.hpp"
 #include <vector>
 #include <memory>
-#include <string>
 
 #include "../common/Point.hpp"
 
@@ -19,7 +18,8 @@ namespace ui::elements {
         sf::Vector2f dragOffset;
 
     public:
-        explicit LerpBezier(std::vector<common::Point> &&startPoints);
+
+        explicit LerpBezier(std::vector<common::Point> &&startPoints_);
 
         void draw(sf::RenderWindow &target, sf::Vector2f origin) const override;
 
