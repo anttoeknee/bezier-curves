@@ -14,7 +14,7 @@ namespace ui::regions {
      * In turn, the Region will house Elements to be drawn relatively within the Region and is
      * responsible for doing so.
      *
-     * These elements will be owned by the Region
+     * The Region will own these elements
      *
      * The App is then responsible for drawing the Regions
      */
@@ -22,13 +22,15 @@ namespace ui::regions {
     protected:
         sf::Vector2f _position;
         sf::Vector2f _size;
+        std::string _name;
 
         std::vector<std::unique_ptr<elements::Element> > elements;
 
         sf::RenderWindow &target;
 
     public:
-        Region(sf::RenderWindow &target, const std::vector<std::unique_ptr<elements::Element> > &elements);
+
+        Region(sf::RenderWindow &target, std::vector<std::unique_ptr<elements::Element>> &&elements);
 
         virtual void draw() const = 0;
 
@@ -46,13 +48,20 @@ namespace ui::regions {
 
         const std::vector<std::unique_ptr<elements::Element> > &getElements() const { return elements; }
 
+        sf::Vector2f getPosition() const { return _position; }
+
+        sf::Vector2f getSize() const { return _size; }
+
         virtual ~Region() = default;
     };
 }
 
 
 // TODO: maybe move this at a later date?
-inline ui::regions::Region::Region(sf::RenderWindow &target,
-                                   const std::vector<std::unique_ptr<elements::Element> > &
-                                   elements) : elements(elements), target(target) {
-}
+// inline ui::regions::Region::Region(sf::RenderWindow &target,
+//                                    const std::vector<std::unique_ptr<elements::Element> > &
+//                                    elements) : elements(elements), target(target) {
+// }
+
+// inline ui::regions::Region::Region(sf::RenderWindow &target, const std::vector<std::unique_ptr<elements::Element> > &elements): target(target) {
+// }

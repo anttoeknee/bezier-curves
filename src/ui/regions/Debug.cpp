@@ -3,12 +3,9 @@
 #include "Debug.hpp"
 #include "../elements/Metrics.hpp"
 
-ui::regions::Debug::Debug(sf::RenderWindow &target): Region(target) {
-    _position = {1080, 0};
-    _size = {200, 800};
-
-    // Mem usage, mouse position etc
-    elements.push_back(std::make_unique<elements::Metrics>());
+ui::regions::Debug::Debug(sf::RenderWindow &target, std::vector<std::unique_ptr<elements::Element> > &&elements, sf::Vector2f position, sf::Vector2f size): Region(target, std::move(elements)) {
+    _position = position;
+    _size = size;
 }
 
 void ui::regions::Debug::draw() const {

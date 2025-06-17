@@ -58,6 +58,7 @@ add_executable(main src/main.cpp src/App.cpp
         src/ui/elements/LerpBezier.hpp
         src/ui/elements/LerpBezier.cpp
         src/ui/common/Point.hpp
+        src/ui/regions/Region.cpp
 )
 
 # Add platform-specific source

@@ -7,7 +7,7 @@ namespace ui::regions {
     class Debug : public Region {
         mutable sf::RectangleShape container;
     public:
-        explicit Debug(sf::RenderWindow &target);
+        Debug(sf::RenderWindow &target, std::vector<std::unique_ptr<elements::Element> > &&elements, sf::Vector2f position, sf::Vector2f size);
 
         void handleMouseMove(sf::Vector2f &mousePos) override;
 
