@@ -14,9 +14,12 @@ namespace ui::regions {
      * In turn, the Region will house Elements to be drawn relatively within the Region and is
      * responsible for doing so.
      *
+     * These elements will be owned by the Region
+     *
      * The App is then responsible for drawing the Regions
      */
-    struct Region {
+    class Region {
+    protected:
         sf::Vector2f _position;
         sf::Vector2f _size;
 
@@ -24,7 +27,8 @@ namespace ui::regions {
 
         sf::RenderWindow &target;
 
-        explicit Region(sf::RenderWindow &target);
+    public:
+        Region(sf::RenderWindow &target, const std::vector<std::unique_ptr<elements::Element> > &elements);
 
         virtual void draw() const = 0;
 
@@ -48,5 +52,7 @@ namespace ui::regions {
 
 
 // TODO: maybe move this at a later date?
-inline ui::regions::Region::Region(sf::RenderWindow &target) : target(target) {
+inline ui::regions::Region::Region(sf::RenderWindow &target,
+                                   const std::vector<std::unique_ptr<elements::Element> > &
+                                   elements) : elements(elements), target(target) {
 }

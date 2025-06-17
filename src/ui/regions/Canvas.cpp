@@ -4,26 +4,26 @@
 #include "../elements/Divider.hpp"
 #include "../utils/ScopedWindowClipping.hpp"
 
-ui::regions::Canvas::Canvas(sf::RenderWindow &target, sf::Vector2f position, sf::Vector2f size): Region(target) {
+ui::regions::Canvas::Canvas(sf::RenderWindow &target, std::vector<std::unique_ptr<elements::Element> > &elements, sf::Vector2f position, sf::Vector2f size): Region(target, elements) {
 
     _position = position;
     _size = size;
 
-    std::vector<common::Point> startPoints1 = {
-        {"Point 1", {50, 350}, {15, 15}},
-        {"Point 2", {350, 50}, {15, 15}},
-        {"Point 3", {850, 275}, {15, 15}}
-    };
-
-    std::vector<common::Point> startPoints2 = {
-        {"Point 3", {100, 750}, {15, 15}},
-        {"Point 4", {750, 425}, {15, 15}},
-        {"Point 5", {850, 755}, {15, 15}}
-    };
-
-    elements.push_back(std::make_unique<elements::Divider>());
-    elements.push_back(std::make_unique<elements::QuadraticBezier>(std::move(startPoints1)));
-    elements.push_back(std::make_unique<elements::LerpBezier>(std::move(startPoints2)));
+    // std::vector<common::Point> startPoints1 = {
+    //     {"Point 1", {50, 350}, {15, 15}},
+    //     {"Point 2", {350, 50}, {15, 15}},
+    //     {"Point 3", {850, 275}, {15, 15}}
+    // };
+    //
+    // std::vector<common::Point> startPoints2 = {
+    //     {"Point 3", {100, 750}, {15, 15}},
+    //     {"Point 4", {750, 425}, {15, 15}},
+    //     {"Point 5", {850, 755}, {15, 15}}
+    // };
+    //
+    // elements.push_back(std::make_unique<elements::Divider>());
+    // elements.push_back(std::make_unique<elements::QuadraticBezier>(std::move(startPoints1)));
+    // elements.push_back(std::make_unique<elements::LerpBezier>(std::move(startPoints2)));
 }
 
 ui::regions::Canvas::~Canvas() = default;

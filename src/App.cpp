@@ -1,10 +1,13 @@
 #include "App.hpp"
 
 #include <iostream>
+#include <ranges>
 
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/Text.hpp"
+#include "ui/elements/Divider.hpp"
 #include "ui/elements/Element.hpp"
+#include "ui/elements/LerpBezier.hpp"
 #include "ui/regions/Canvas.hpp"
 #include "ui/regions/Debug.hpp"
 
@@ -17,10 +20,35 @@ App::App(core::utils::Config config)
       ) {
     window.setFramerateLimit(60);
 
-    // Bezier Curves
-    regions.push_back(std::make_unique<ui::regions::Canvas>(window, sf::Vector2f{0, 0}, sf::Vector2f{1080, 400}));
-    regions.push_back(std::make_unique<ui::regions::Canvas>(window, sf::Vector2f{0, 401}, sf::Vector2f{1080, 400}));
+    std::vector<ui::common::Point> startPoints1 = {
+        {"Point 1", {50, 350}, {15, 15}},
+        {"Point 2", {350, 50}, {15, 15}},
+        {"Point 3", {850, 275}, {15, 15}}
+    };
 
+    std::vector<ui::common::Point> startPoints2 = {
+        {"Point 3", {100, 750}, {15, 15}},
+        {"Point 4", {750, 425}, {15, 15}},
+        {"Point 5", {850, 755}, {15, 15}}
+    };
+
+    // Divider to separate Canvas'
+    auto divider = std::make_unique<ui::elements::Divider>();
+
+    // Bezier Curves
+    auto quadBez = std::make_unique<ui::elements::QuadraticBezier>(std::move(startPoints1));
+    auto lerpBez = std::make_unique<ui::elements::LerpBezier>(std::move(startPoints2));
+
+    // Top region
+    std::vector<std::unique_ptr<ui::elements::Element>> topRegionElements;
+    topRegionElements.push_back(std::move(quadBez));
+    auto topRegion = std::make_unique<ui::regions::Canvas>(window, topRegionElements, sf::Vector2f{0, 0}, sf::Vector2f{1080, 400});
+
+    // Bottom region
+    std::vector<std::unique_ptr<ui::elements::Element>> bottomRegionElements;
+    bottomRegionElements.push_back(std::move(lerpBez));
+    auto bottomRegion = std::make_unique<ui::regions::Canvas>(window, bottomRegionElements, sf::Vector2f{0, 401}, sf::Vector2f{1080, 400});
+    
     // Debug
     regions.push_back(std::make_unique<ui::regions::Debug>(window));
 }
