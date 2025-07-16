@@ -10,7 +10,7 @@
 namespace ui::elements {
 
     class LerpBezier : public Element {
-        std::vector<std::unique_ptr<sf::Shape>> controlPoints;
+        std::vector<std::shared_ptr<sf::Shape>> controlPoints;
         std::vector<common::Point> startPoints;
 
         bool isDragging = false;
@@ -19,7 +19,7 @@ namespace ui::elements {
 
     public:
 
-        explicit LerpBezier(std::vector<common::Point> &&startPoints_);
+        explicit LerpBezier(const std::vector<common::Point>& startPoints);
 
         void draw(sf::RenderWindow &target, sf::Vector2f origin) const override;
 

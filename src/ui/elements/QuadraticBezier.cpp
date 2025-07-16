@@ -9,8 +9,7 @@
 #include "SFML/Window/Mouse.hpp"
 
 
-ui::elements::QuadraticBezier::QuadraticBezier(std::vector<common::Point> &&startPoints_)
-    : startPoints(std::move(startPoints_)) {
+ui::elements::QuadraticBezier::QuadraticBezier(const std::vector<common::Point>& startPoints) : startPoints(startPoints) {
 
     // Initial state
     for (auto &point: startPoints) {

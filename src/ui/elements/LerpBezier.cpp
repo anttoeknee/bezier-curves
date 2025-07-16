@@ -11,8 +11,8 @@
 #include "SFML/Window/Mouse.hpp"
 
 
-ui::elements::LerpBezier::LerpBezier(std::vector<common::Point> &&startPoints_)
-    : startPoints(std::move(startPoints_)) {
+ui::elements::LerpBezier::LerpBezier(const std::vector<common::Point>& startPoints) : startPoints(startPoints) {
+
     // Initial state
     for (auto &point: startPoints) {
         sf::RectangleShape rect(sf::Vector2f(point.size.x, point.size.y));

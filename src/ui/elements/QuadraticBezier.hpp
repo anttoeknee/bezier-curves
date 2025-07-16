@@ -6,7 +6,7 @@
 namespace ui::elements {
 
     class QuadraticBezier : public Element {
-        std::vector<std::unique_ptr<sf::Shape> > controlPoints;
+        std::vector<std::shared_ptr<sf::Shape> > controlPoints;
         std::vector<common::Point> startPoints;
 
         bool isDragging = false;
@@ -14,7 +14,7 @@ namespace ui::elements {
         sf::Vector2f dragOffset;
 
     public:
-        explicit QuadraticBezier(std::vector<common::Point> &&startPoints);
+        explicit QuadraticBezier(const std::vector<common::Point>& startPoints);
 
         void draw(sf::RenderWindow &target, sf::Vector2f origin) const override;
 
