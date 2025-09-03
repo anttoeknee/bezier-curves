@@ -3,6 +3,7 @@
 #include "../elements/LerpBezier.hpp"
 #include "../elements/Divider.hpp"
 #include "../utils/ScopedWindowClipping.hpp"
+#include "../../core/utils/AssetManager.hpp"
 
 ui::regions::Canvas::Canvas(
         sf::RenderWindow &target,
@@ -48,7 +49,7 @@ void ui::regions::Canvas::draw() const {
 
     // Not sure some simple text warrants an element?
     // TODO: break this down so it can be used across draw and update
-    sf::Font font("/System/Library/Fonts/SFNS.ttf");
+    sf::Font font = core::utils::AssetManager::loadEmbeddedFont();
     sf::Text title(font);
     title.setString(_name);
     title.setCharacterSize(16);

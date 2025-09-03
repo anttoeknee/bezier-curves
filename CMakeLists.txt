@@ -1,5 +1,11 @@
 cmake_minimum_required(VERSION 3.28)
-project(BezierCurves LANGUAGES CXX OBJCXX)
+
+if (APPLE)
+    project(BezierCurves LANGUAGES OBJCXX)
+elseif (WIN32)
+    project(BezierCurves LANGUAGES CXX)
+endif ()
+
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
@@ -36,10 +42,12 @@ FetchContent_MakeAvailable(SFML)
 #FetchContent_MakeAvailable(tgui)
 
 # Create the executable
-add_executable(main src/main.cpp src/App.cpp
+add_executable(
+        main
+        src/main.cpp
+        src/App.cpp
         src/core/utils/Mem.hpp
         src/core/utils/Config.hpp
-        src/core/utils/Config.mm
         src/ui/elements/Element.hpp
         src/ui/elements/QuadraticBezier.cpp
         src/core/math/Geometry.hpp
@@ -59,14 +67,54 @@ add_executable(main src/main.cpp src/App.cpp
         src/ui/elements/LerpBezier.cpp
         src/ui/common/Point.hpp
         src/ui/regions/Region.cpp
+        src/core/utils/AssetManager.hpp
+        src/core/utils/AssetManager.cpp
+
 )
+
+# Fonts
+if(WIN32)
+    # Windows: Use objcopy from MinGW or create a custom command with xxd/PowerShell
+    find_program(OBJCOPY objcopy)
+    if(OBJCOPY)
+        add_custom_command(
+                OUTPUT ${CMAKE_BINARY_DIR}/segoeui_font.o
+                COMMAND ${OBJCOPY} -I binary -O elf64-x86-64 -B i386:x86-64
+                --rename-section .data=.rodata,alloc,load,readonly,data,contents
+                segoeui.ttf ${CMAKE_BINARY_DIR}/segoeui_font.o
+                WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/assets/fonts
+                DEPENDS ${CMAKE_SOURCE_DIR}/assets/fonts/segoeui.ttf
+                COMMENT "Embedding segoeui.ttf as object file"
+        )
+        set(FONT_OBJECT ${CMAKE_BINARY_DIR}/segoeui_font.o)
+    endif()
+elseif(APPLE)
+    # MacOS: Use ld
+    add_custom_command(
+            OUTPUT ${CMAKE_BINARY_DIR}/segoeui_font.o
+            COMMAND ld -r -b binary -o ${CMAKE_BINARY_DIR}/segoeui_font.o segoeui.ttf
+            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/assets/fonts
+            DEPENDS ${CMAKE_SOURCE_DIR}/assets/fonts/segoeui.ttf
+            COMMENT "Embedding segoeui.ttf as object file"
+    )
+    set(FONT_OBJECT ${CMAKE_BINARY_DIR}/segoeui_font.o)
+endif()
+
+# Add the embedded font to your target if available
+if(FONT_OBJECT)
+    target_sources(main PRIVATE ${FONT_OBJECT})
+endif()
 
 # Add platform-specific source
 if (APPLE)
-    target_sources(main PRIVATE src/core/utils/Mem.mm)
+    #target_sources(main PRIVATE src/core/utils/Mem.mm)
+    target_sources(main PRIVATE src/core/utils/Config.mm)
 elseif (WIN32)
-    target_sources(main PRIVATE src/core/utils/Mem.cpp)
+    target_sources(main PRIVATE src/core/utils/Mem.cpp src/core/utils/Config.cpp)
 endif ()
+
+
+
 
 # Use C++20 and link SFML + TGUI
 target_compile_features(main PRIVATE cxx_std_20)

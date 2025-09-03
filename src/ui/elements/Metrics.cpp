@@ -1,10 +1,12 @@
 #include "Metrics.hpp"
+
+#include "../../core/utils/AssetManager.hpp"
 #include "../../core/utils/Mem.hpp"
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/Text.hpp"
 
 // TODO: pass origin from region into constructor
-ui::elements::Metrics::Metrics(): font("/System/Library/Fonts/SFNS.ttf"), memText(font), mousePosText(font) {
+ui::elements::Metrics::Metrics(): font(core::utils::AssetManager::loadEmbeddedFont()), memText(font), mousePosText(font) {
     // TODO: see if we can get the position before onMove
     mousePosition({0, 0});
 }
