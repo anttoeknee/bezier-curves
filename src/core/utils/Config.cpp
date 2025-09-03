@@ -6,7 +6,6 @@ core::utils::Config core::utils::Config::load() {
         1280u,
         810u,
         false,
-        R"(C:\Windows\Fonts\segoeui.ttf)",
     };
 }
 
