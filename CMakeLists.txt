@@ -21,8 +21,17 @@ FetchContent_Declare(SFML
         EXCLUDE_FROM_ALL
         SYSTEM)
 FetchContent_MakeAvailable(SFML)
-#
-#
+
+
+FetchContent_Declare(
+        nlohmann_json
+        GIT_REPOSITORY https://github.com/nlohmann/json.git
+        GIT_TAG v3.11.3  # Use the latest stable version
+)
+
+FetchContent_MakeAvailable(nlohmann_json)
+
+
 
 # Set TGUI backend before fetching TGUI
 #set(TGUI_BUILD_FRAMEWORK OFF CACHE BOOL "" FORCE)
@@ -105,9 +114,15 @@ if(FONT_OBJECT)
     target_sources(main PRIVATE ${FONT_OBJECT})
 endif()
 
+# Move config.json to the binary directory
+add_custom_command(TARGET main POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        ${CMAKE_SOURCE_DIR}/config.json
+        $<TARGET_FILE_DIR:main>/config.json)
+
 # Add platform-specific source
 if (APPLE)
-    #target_sources(main PRIVATE src/core/utils/Mem.mm)
+    target_sources(main PRIVATE src/core/utils/Mem.mm)
     target_sources(main PRIVATE src/core/utils/Config.mm)
 elseif (WIN32)
     target_sources(main PRIVATE src/core/utils/Mem.cpp src/core/utils/Config.cpp)
@@ -118,7 +133,7 @@ endif ()
 
 # Use C++20 and link SFML + TGUI
 target_compile_features(main PRIVATE cxx_std_20)
-target_link_libraries(main PRIVATE sfml-graphics)
+target_link_libraries(main PRIVATE sfml-graphics nlohmann_json::nlohmann_json)
 
 
 

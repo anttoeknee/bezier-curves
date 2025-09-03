@@ -17,9 +17,9 @@ App::App(core::utils::Config config)
     : config(),
       window(sf::VideoMode({
                  config.windowWidth, config.windowHeight
-             }), "Bezier Curves", sf::Style::Titlebar | sf::Style::Close
+             }), config.title, sf::Style::Titlebar | sf::Style::Close | sf::Style::Resize, sf::State::Windowed
       ) {
-    window.setFramerateLimit(60);
+    window.setFramerateLimit(120);
 
     std::vector<ui::common::Point> startPoints1 = {
         {"Point 1", {50, 350}, {15, 15}},

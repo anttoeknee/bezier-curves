@@ -1,0 +1,15 @@
+{
+  "window" : {
+    "width" : 1280,
+    "height" : 810,
+    "fullscreen" : true,
+    "vsync" : true,
+    "title" : "Bezier Curves"
+  },
+  "fonts" : {
+    "default" : {
+      "name" : "SFNS",
+      "size" : 16
+    }
+  }
+}
