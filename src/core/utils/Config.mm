@@ -21,12 +21,11 @@ core::utils::Config core::utils::Config::load() {
             data.value("window.fullscreen", false),
             data.value("window.vsync", true),
             data.value("window.title", "Application"),
-            data.value("window.font_path", "/System/Library/Fonts/SFNS.ttf")
         };
     } catch (const std::exception& e) {
         std::cerr << "Config error: " << e.what() << ", using defaults\n";
         // Return default values on error
-        return {1280u, 810u, false, true, "Application", "/System/Library/Fonts/SFNS.ttf"};
+        return {1280u, 810u, false, true, "Application"};
     }
 }
 
