@@ -78,6 +78,8 @@ add_executable(
         src/ui/regions/Region.cpp
         src/core/utils/AssetManager.hpp
         src/core/utils/AssetManager.cpp
+        src/ui/elements/Logo.hpp
+        src/ui/elements/Logo.cpp
 
 )
 
