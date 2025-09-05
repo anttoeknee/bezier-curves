@@ -35,9 +35,14 @@ App::App(core::utils::Config config)
     };
 
     std::vector<ui::common::Point> startPoints3 = {
-        {"Point 1", {550, 350}, {5, 5}},
-        {"Point 2", {650, 50}, {5, 5}},
-        {"Point 3", {850, 275}, {5, 5}}
+        {"Point 1", {600, 350}, {5, 5}},
+        {"Point 2", {600, 100}, {5, 5}},
+        {"Point 3", {675, 100}, {5, 5}},
+        {"Point 4", {665, 175}, {5, 5}},
+        {"Point 5", {750, 100}, {5, 5}},
+        {"Point 6", {850, 350}, {5, 5}},
+        {"Point 7", {775, 350}, {5, 5}},
+        {"Point 8", {675, 350}, {5, 5}}
     };
 
     // Bezier Curves

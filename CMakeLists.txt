@@ -100,7 +100,7 @@ if(WIN32)
         set(FONT_OBJECT ${CMAKE_BINARY_DIR}/segoeui_font.o)
     endif()
 elseif(APPLE)
-    # MacOS: Embed the font file using ld
+    # MacOS: Embed the font file using ld (this is horrible, but works)
     add_custom_command(
             OUTPUT ${CMAKE_BINARY_DIR}/segoeui_font.o
             COMMAND printf ".section __DATA,__segoeui_ttf\\\\n.globl __binary_segoeui_ttf_start\\\\n__binary_segoeui_ttf_start:\\\\n.incbin \\\\\\\"${CMAKE_SOURCE_DIR}/assets/fonts/segoeui.ttf\\\\\\\"\\\\n.globl __binary_segoeui_ttf_end\\\\n__binary_segoeui_ttf_end:\\\\n" > ${CMAKE_BINARY_DIR}/segoeui_font.s
