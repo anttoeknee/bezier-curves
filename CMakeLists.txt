@@ -80,6 +80,8 @@ add_executable(
         src/core/utils/AssetManager.cpp
         src/ui/elements/Logo.hpp
         src/ui/elements/Logo.cpp
+        src/ui/common/Segment.hpp
+        src/ui/common/Path.hpp
 
 )
 

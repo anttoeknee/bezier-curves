@@ -1,16 +1,18 @@
 #pragma once
 #include "Element.hpp"
+#include "../common/Path.hpp"
 #include "../common/Point.hpp"
 #include "SFML/Graphics/Shape.hpp"
 
 namespace ui::elements {
 
     class Logo : public Element {
-        std::vector<std::unique_ptr<sf::Shape> > controlPoints;
-        std::vector<common::Point> startPoints;
+        common::Path path;
 
     public:
-        explicit Logo(std::vector<common::Point> &&startPoints_);
+        explicit Logo(
+            common::Path &&path_
+        );
 
         void draw(sf::RenderWindow &target, sf::Vector2f origin) const override;
 

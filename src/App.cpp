@@ -5,6 +5,7 @@
 
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/Text.hpp"
+#include "ui/common/Path.hpp"
 #include "ui/elements/Divider.hpp"
 #include "ui/elements/Element.hpp"
 #include "ui/elements/LerpBezier.hpp"
@@ -34,23 +35,67 @@ App::App(core::utils::Config config)
         {"Point 5", {850, 755}, {15, 15}}
     };
 
-    std::vector<ui::common::Point> startPoints3 = {
+    // Logo
+    ui::common::Path logoPath{"Logo"};
+    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::LINE, {
         {"Point 1", {600, 350}, {5, 5}},
         {"Point 2", {600, 100}, {5, 5}},
+    }});
+
+    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::LINE, {
+        {"Point 2", {600, 100}, {5, 5}},
+        {"Point 3", {675, 100}, {5, 5}},
+    }});
+
+    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::LINE, {
         {"Point 3", {675, 100}, {5, 5}},
         {"Point 4", {665, 175}, {5, 5}},
+    }});
+
+    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::CURVE, {
+        {"Point 4", {665, 175}, {5, 5}},
+        // control point here
         {"Point 5", {750, 100}, {5, 5}},
-        {"Point 6", {850, 350}, {5, 5}},
-        {"Point 7", {775, 350}, {5, 5}},
-        {"Point 8", {675, 350}, {5, 5}}
-    };
+    }});
+
+    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::CURVE, {
+        {"Point 5", {750, 100}, {5, 5}},
+        // control point here
+        {"Point 6", {850, 175}, {5, 5}},
+    }});
+
+    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::LINE, {
+        {"Point 6", {850, 175}, {5, 5}},
+        {"Point 7", {850, 350}, {5, 5}},
+    }});
+
+    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::LINE, {
+        {"Point 7", {850, 350}, {5, 5}},
+        {"Point 8", {775, 350}, {5, 5}},
+    }});
+
+    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::LINE, {
+        {"Point 8", {775, 350}, {5, 5}},
+        {"Point 9", {775, 175}, {5, 5}},
+    }});
+
+    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::CURVE, {
+        {"Point 9", {775, 350}, {5, 5}},
+        // control point here
+        {"Point 10", {775, 175}, {5, 5}},
+    }});
+
+    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::LINE, {
+        {"Point 10", {675, 175}, {5, 5}},
+        {"Point 11", {675, 350}, {5, 5}}
+    }});
 
     // Bezier Curves
     auto quadBez = std::make_unique<ui::elements::QuadraticBezier>(std::move(startPoints1));
     auto lerpBez = std::make_unique<ui::elements::LerpBezier>(std::move(startPoints2));
 
     // Logo
-    auto logo = std::make_unique<ui::elements::Logo>(std::move(startPoints3));
+    auto logo = std::make_unique<ui::elements::Logo>(std::move(logoPath));
 
     // Debug (Mem usage, mouse position etc)
     auto debug = std::make_unique<ui::elements::Metrics>();
