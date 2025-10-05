@@ -9,6 +9,7 @@
 #include "ui/elements/Divider.hpp"
 #include "ui/elements/Element.hpp"
 #include "ui/elements/LerpBezier.hpp"
+#include "ui/elements/LineTool.hpp"
 #include "ui/elements/Logo.hpp"
 #include "ui/elements/Metrics.hpp"
 #include "ui/regions/Canvas.hpp"
@@ -23,6 +24,7 @@ App::App(core::utils::Config config)
       ) {
     window.setFramerateLimit(120);
 
+    // TODO: move these to some sort of data file, then read them in?
     std::vector<ui::common::Point> startPoints1 = {
         {"Point 1", {50, 350}, {15, 15}},
         {"Point 2", {250, 50}, {15, 15}},
@@ -30,9 +32,14 @@ App::App(core::utils::Config config)
     };
 
     std::vector<ui::common::Point> startPoints2 = {
-        {"Point 3", {100, 750}, {15, 15}},
-        {"Point 4", {750, 425}, {15, 15}},
-        {"Point 5", {850, 755}, {15, 15}}
+        {"Point 3", {50, 761}, {15, 15}},
+        {"Point 4", {250, 461}, {15, 15}},
+        {"Point 5", {450, 686}, {15, 15}}
+    };
+
+    std::vector<ui::common::Point> startPoints3 = {
+        {"Point 6", {600, 711}, {15, 15}},
+        {"Point 7", {961, 486}, {15, 15}}
     };
 
     // Logo
@@ -93,6 +100,7 @@ App::App(core::utils::Config config)
     // Bezier Curves
     auto quadBez = std::make_unique<ui::elements::QuadraticBezier>(std::move(startPoints1));
     auto lerpBez = std::make_unique<ui::elements::LerpBezier>(std::move(startPoints2));
+    auto penTool = std::make_unique<ui::elements::LineTool>(std::move(startPoints3));
 
     // Logo
     auto logo = std::make_unique<ui::elements::Logo>(std::move(logoPath));
@@ -110,10 +118,15 @@ App::App(core::utils::Config config)
     topRightRegionElements.push_back(std::move(logo));
     auto topRightRegion = std::make_unique<ui::regions::Canvas>(window, std::move(topRightRegionElements), sf::Vector2f{545, 10}, sf::Vector2f{525, 390}, "Logo");
 
-    // Bottom region
-    std::vector<std::unique_ptr<ui::elements::Element>> bottomRegionElements;
-    bottomRegionElements.push_back(std::move(lerpBez));
-    auto bottomRegion = std::make_unique<ui::regions::Canvas>(window, std::move(bottomRegionElements), sf::Vector2f{10, 411}, sf::Vector2f{1060, 390}, "Linear Interpolation");
+    // Bottom left region
+    std::vector<std::unique_ptr<ui::elements::Element>> bottomLeftRegionElements;
+    bottomLeftRegionElements.push_back(std::move(lerpBez));
+    auto bottomLeftRegion = std::make_unique<ui::regions::Canvas>(window, std::move(bottomLeftRegionElements), sf::Vector2f{10, 411}, sf::Vector2f{525, 390}, "Linear Interpolation");
+
+    // Bottom right region
+    std::vector<std::unique_ptr<ui::elements::Element>> bottomRightRegionElements;
+    bottomRightRegionElements.push_back(std::move(penTool));
+    auto bottomRightRegion = std::make_unique<ui::regions::Canvas>(window, std::move(bottomRightRegionElements), sf::Vector2f{545, 411}, sf::Vector2f{525, 390}, "Primitive Line Tool");
     
     // Side region
     std::vector<std::unique_ptr<ui::elements::Element>> sideRegionElements;
@@ -122,7 +135,8 @@ App::App(core::utils::Config config)
 
     regions.push_back(std::move(topLeftRegion));
     regions.push_back(std::move(topRightRegion));
-    regions.push_back(std::move(bottomRegion));
+    regions.push_back(std::move(bottomLeftRegion));
+    regions.push_back(std::move(bottomRightRegion));
     regions.push_back(std::move(sideRegion));
 }
 

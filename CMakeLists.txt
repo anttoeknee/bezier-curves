@@ -82,6 +82,8 @@ add_executable(
         src/ui/elements/Logo.cpp
         src/ui/common/Segment.hpp
         src/ui/common/Path.hpp
+        src/ui/elements/LineTool.hpp
+        src/ui/elements/LineTool.cpp
 
 )
 
