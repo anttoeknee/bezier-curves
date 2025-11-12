@@ -9,6 +9,11 @@ namespace ui::elements {
     class LineTool : public Element {
         std::vector<common::Point> startPoints;
         std::vector<std::unique_ptr<sf::Shape> > anchorPoints;
+
+        // TODO: move into a shared object
+        bool isDragging = false;
+        sf::Shape *draggedShape = nullptr;
+        sf::Vector2f dragOffset;
     public:
         void draw(sf::RenderWindow &target, sf::Vector2f origin) const override;
 

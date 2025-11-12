@@ -16,12 +16,12 @@ ui::elements::LineTool::LineTool(std::vector<common::Point> &&startPoints_)
     : startPoints(std::move(startPoints_)) {
 
     // Initial state
-    // for (auto &point: startPoints) {
-    //     sf::RectangleShape rect(sf::Vector2f(point.size.x, point.size.y));
-    //     rect.setPosition({point.position.x, point.position.y});
-    //     rect.setFillColor(sf::Color::White);
-    //     anchorPoints.push_back(std::make_unique<sf::RectangleShape>(rect));
-    // }
+    for (auto &point: startPoints) {
+        sf::RectangleShape rect(sf::Vector2f(point.size.x, point.size.y));
+        rect.setPosition({point.position.x, point.position.y});
+        rect.setFillColor(sf::Color::White);
+        anchorPoints.push_back(std::make_unique<sf::RectangleShape>(rect));
+    }
 }
 
 void ui::elements::LineTool::draw(sf::RenderWindow &target, sf::Vector2f origin) const {
@@ -56,17 +56,17 @@ void ui::elements::LineTool::draw(sf::RenderWindow &target, sf::Vector2f origin)
     std::vector midPointCtrlPointCandidates = { mpCandidate1, mpCandidate2 };
 
 
-    std::vector points = {startPoints[0], startPoints[1]};
+    //std::vector points = {startPoints[0], startPoints[1]};
 
     // Draw points
     std::vector<sf::RectangleShape> shapes;
-    for (auto &point: points) {
-        sf::RectangleShape rect(sf::Vector2f(point.size.x, point.size.y));
-        rect.setPosition({point.position.x, point.position.y});
-        rect.setFillColor(sf::Color::White);
-        target.draw(*std::make_unique<sf::RectangleShape>(rect));
-        shapes.push_back(rect);
-    }
+    // for (auto &point: points) {
+    //     sf::RectangleShape rect(sf::Vector2f(point.size.x, point.size.y));
+    //     rect.setPosition({point.position.x, point.position.y});
+    //     rect.setFillColor(sf::Color::White);
+    //     target.draw(*std::make_unique<sf::RectangleShape>(rect));
+    //     shapes.push_back(rect);
+    // }
 
     // Draw midpoint to stand out
     sf::RectangleShape rect(sf::Vector2f(midPoint.size.x, midPoint.size.y));
@@ -96,7 +96,11 @@ void ui::elements::LineTool::draw(sf::RenderWindow &target, sf::Vector2f origin)
 }
 
 void ui::elements::LineTool::update(sf::RenderWindow &target, sf::Vector2f origin) const {
-
+    // Handle dragging
+    if (isDragging && draggedShape) {
+        sf::Vector2i mousePos = sf::Mouse::getPosition(target);
+        draggedShape->setPosition({mousePos.x - dragOffset.x, mousePos.y - dragOffset.y});
+    }
 }
 
 void ui::elements::LineTool::handleMouseMove(sf::Vector2f &mousePos) {
@@ -105,9 +109,24 @@ void ui::elements::LineTool::handleMouseMove(sf::Vector2f &mousePos) {
 
 
 void ui::elements::LineTool::handleMouseButtonPressed(sf::Vector2f &mousePos) {
+    for (auto &anchorPoint: anchorPoints) {
 
+        // Determine if we've mouse-downed on this shape
+        if (anchorPoint->getGlobalBounds().contains(mousePos)) {
+            // Update our bool
+            isDragging = true;
+
+            // Make sure we don't get jumpy movement of the shape
+            draggedShape = anchorPoint.get();
+            dragOffset = mousePos - draggedShape->getPosition();
+
+            break;
+        }
+    }
 }
 
 void ui::elements::LineTool::handleMouseButtonReleased() {
-
+    // Reset our bool and dragged shape
+    isDragging = false;
+    draggedShape = nullptr;
 }

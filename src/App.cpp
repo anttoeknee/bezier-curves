@@ -126,7 +126,7 @@ App::App(core::utils::Config config)
     // Bottom right region
     std::vector<std::unique_ptr<ui::elements::Element>> bottomRightRegionElements;
     bottomRightRegionElements.push_back(std::move(penTool));
-    auto bottomRightRegion = std::make_unique<ui::regions::Canvas>(window, std::move(bottomRightRegionElements), sf::Vector2f{545, 411}, sf::Vector2f{525, 390}, "Primitive Line Tool");
+    auto bottomRightRegion = std::make_unique<ui::regions::Canvas>(window, std::move(bottomRightRegionElements), sf::Vector2f{545, 411}, sf::Vector2f{525, 390}, "Primitive Pen Tool");
     
     // Side region
     std::vector<std::unique_ptr<ui::elements::Element>> sideRegionElements;
