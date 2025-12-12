@@ -39,6 +39,7 @@ void ui::elements::QuadraticBezier::draw(sf::RenderWindow &target, sf::Vector2f 
         bezierLine.push_back(sf::Vertex({point, sf::Color::White}));
     }
 
+    // Apparently, SFML draws the rest of the vertices; we only need to say where to start from
     target.draw(&bezierLine[0], bezierLine.size(), sf::PrimitiveType::LineStrip);
 }
 
