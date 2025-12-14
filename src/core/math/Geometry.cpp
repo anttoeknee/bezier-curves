@@ -10,7 +10,7 @@ sf::Vector2f core::math::quadraticBezier(
     return u * u * p0 + 2 * u * t * p1 + t * t * p2;
 }
 
-sf::Vector2f cubicBezier(
+sf::Vector2f core::math::cubicBezier(
     const sf::Vector2f& p0,
     const sf::Vector2f& p1,
     const sf::Vector2f& p2,
