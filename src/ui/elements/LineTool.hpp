@@ -11,6 +11,7 @@ namespace ui::elements {
 
         std::array<sf::RectangleShape, 2> anchorShapes;
         size_t anchorPointCount = 0;  // Track how many points we've created (0-2)
+        common::Point midPoint; // The (invisible) half-way point between the two user selected points
 
         // TODO: move into a shared object
         bool isDragging = false;

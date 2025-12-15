@@ -80,6 +80,10 @@ void ui::regions::Canvas::update() const {
     for (auto &element: elements) {
         element->update(target, _position);
     }
+
+    if (activeTool != nullptr) {
+        activeTool->update(target, _position);
+    }
 }
 
 void ui::regions::Canvas::setActiveTool(std::unique_ptr<elements::Element> &&element) {

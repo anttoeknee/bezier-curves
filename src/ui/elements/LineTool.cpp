@@ -29,6 +29,26 @@ namespace ui::elements {
             target.draw(anchorShapes[i]);
         }
 
+        if (anchorPointCount == 2) {
+
+            // Lines
+            std::vector<sf::Vertex> bezierLine;
+            for (float t = 0; t <= 1.0f; t += 0.01f) {
+                sf::Vector2f point = core::math::quadraticBezier(
+                    anchorShapes[0].getPosition(),
+                    midPoint.position,
+                    anchorShapes[1].getPosition(),
+                    t
+                );
+                bezierLine.push_back(sf::Vertex({point, sf::Color::White}));
+            }
+
+            // Apparently, SFML draws the rest of the vertices; we only need to say where to start from
+            target.draw(&bezierLine[0], bezierLine.size(), sf::PrimitiveType::LineStrip);
+        }
+
+
+
         /* Compute control points
         sf::Vector2f midPos = (startPoints[0].position + startPoints[1].position) * 0.5f;
         common::Point midPoint = {"mid point", midPos, startPoints[0].size * 0.2f};
@@ -103,6 +123,13 @@ namespace ui::elements {
             sf::Vector2f mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(target));
             anchorShapes[draggedShapeIndex].setPosition(mousePos - dragOffset);
         }
+
+        // If we're at two anchor shapes, create a line between the two points using a quadratic curve
+        // calculating the midpoint on-the-flye
+        sf::Vector2f midPos = (anchorShapes[0].getPosition() + anchorShapes[1].getPosition()) / 2.f;
+        midPoint = {"Mid-point", midPos, anchorShapes[0].getSize() * 0.2f};
+
+        std::cout << "midPoint: " << midPoint.position.x << ", " << midPoint.position.y << std::endl;
     }
 
     void LineTool::handleMouseMove(sf::Vector2f &mousePos) {
