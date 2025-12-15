@@ -13,30 +13,12 @@
 #include "SFML/Window/Mouse.hpp"
 
 namespace ui::elements {
-    void LineTool::draw(sf::RenderWindow &target, sf::Vector2f origin) const {
-
-        std::cout << "Drawing " << anchorPointCount << " anchor points" << std::endl;
-
-        for (size_t i = 0; i < anchorPointCount; ++i) {
-            std::cout << "  Point " << i << " at: "
-                      << anchorShapes[i].getPosition().x << ", "
-                      << anchorShapes[i].getPosition().y << std::endl;
-            target.draw(anchorShapes[i]);
-        }
+    void LineTool::draw(sf::RenderWindow &target, sf::Vector2f origin) {
 
         // Only draw the shapes we've actually created
         for (size_t i = 0; i < anchorPointCount; ++i) {
-            target.draw(anchorShapes[i]);
+            target.draw(controlShapes[i]);
         }
-
-        // Draw the midpoint
-        std::vector<sf::RectangleShape> midPointShapes;
-        sf::RectangleShape rect(sf::Vector2f(midPoint.size.x, midPoint.size.y));
-        rect.setPosition({midPoint.position.x, midPoint.position.y});
-        rect.setFillColor(sf::Color::Red);
-        target.draw(*std::make_unique<sf::RectangleShape>(rect));
-
-
 
         // Draw connecting line
         if (anchorPointCount == 2) {
@@ -45,9 +27,9 @@ namespace ui::elements {
             std::vector<sf::Vertex> bezierLine;
             for (float t = 0; t <= 1.0f; t += 0.01f) {
                 sf::Vector2f point = core::math::quadraticBezier(
-                    anchorShapes[0].getPosition(),
-                    midPoint.position,
-                    anchorShapes[1].getPosition(),
+                    controlShapes[0].getPosition(),
+                    controlShapes[2].getPosition(),
+                    controlShapes[1].getPosition(),
                     t
                 );
                 bezierLine.push_back(sf::Vertex({point, sf::Color::White}));
@@ -55,73 +37,17 @@ namespace ui::elements {
 
             // Apparently, SFML draws the rest of the vertices; we only need to say where to start from
             target.draw(&bezierLine[0], bezierLine.size(), sf::PrimitiveType::LineStrip);
+
+            // Draw the midpoint
+            target.draw(controlShapes.back());
+
+            // Draw the midpoint to control point line (always anchored to first point)
+            sf::Vertex line1[] = {
+                sf::Vertex(controlShapes[0].getPosition(), sf::Color::Cyan),
+                sf::Vertex(controlShapes[2].getPosition(), sf::Color::Cyan)
+            };
+            target.draw(line1, 2, sf::PrimitiveType::Lines);
         }
-
-
-
-        /* Compute control points
-        sf::Vector2f midPos = (startPoints[0].position + startPoints[1].position) * 0.5f;
-        common::Point midPoint = {"mid point", midPos, startPoints[0].size * 0.2f};
-
-        // calculate outbound and inbound control point candidates
-        common::Point mpCandidate1 = {
-            "cp candidate 1",
-            {
-                midPoint.position.x * 0.9f,
-                midPoint.position.y * 0.9f
-            },
-            {10, 10}
-        };
-
-        common::Point mpCandidate2 = {
-            "cp candidate 2",
-            {
-                midPoint.position.x * 1.1f,
-                midPoint.position.y * 1.1f
-            },
-            {10, 10}
-        };
-
-        std::vector midPointCtrlPointCandidates = {mpCandidate1, mpCandidate2};
-
-
-        //std::vector points = {startPoints[0], startPoints[1]};
-
-        // Draw points
-        std::vector<sf::RectangleShape> shapes;
-        // for (auto &point: points) {
-        //     sf::RectangleShape rect(sf::Vector2f(point.size.x, point.size.y));
-        //     rect.setPosition({point.position.x, point.position.y});
-        //     rect.setFillColor(sf::Color::White);
-        //     target.draw(*std::make_unique<sf::RectangleShape>(rect));
-        //     shapes.push_back(rect);
-        // }
-
-        // Draw midpoint to stand out
-        sf::RectangleShape rect(sf::Vector2f(midPoint.size.x, midPoint.size.y));
-        rect.setPosition({midPoint.position.x, midPoint.position.y});
-        rect.setFillColor(sf::Color::Red);
-        target.draw(*std::make_unique<sf::RectangleShape>(rect));
-        shapes.push_back(rect);
-
-        // Draw control point candidates
-        std::vector<sf::RectangleShape> midPointShapes;
-        for (auto &cpCandidate: midPointCtrlPointCandidates) {
-            sf::RectangleShape rect(sf::Vector2f(cpCandidate.size.x, cpCandidate.size.y));
-            rect.setPosition({cpCandidate.position.x, cpCandidate.position.y});
-            rect.setFillColor(sf::Color::Cyan);
-            target.draw(*std::make_unique<sf::RectangleShape>(rect));
-            midPointShapes.push_back(rect);
-        }
-
-        // Draw connecting line between control point candidates and mid point
-        std::vector<sf::Vertex> ctrlPointLines;
-        for (auto &cpCandidate: midPointShapes) {
-            //ctrlPointLines.push_back(sf::Vertex({midPointShapes[0].getPosition(), sf::Color::Cyan}));
-            //ctrlPointLines.push_back(sf::Vertex({cpCandidate.getPosition(), sf::Color::Cyan}));
-        }
-
-        //target.draw(&bezierLine[0], bezierLine.size(), sf::PrimitiveType::LineStrip);*/
     }
 
     void LineTool::update(sf::RenderWindow &target, sf::Vector2f origin) {
@@ -131,13 +57,19 @@ namespace ui::elements {
         // Handle dragging
         if (isDragging) {
             sf::Vector2f mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(target));
-            anchorShapes[draggedShapeIndex].setPosition(mousePos - dragOffset);
+            controlShapes[draggedShapeIndex].setPosition(mousePos - dragOffset);
         }
 
-        // If we're at two anchor shapes, create a line between the two points using a quadratic curve
-        // calculating the midpoint on-the-flye
-        sf::Vector2f midPos = (anchorShapes[0].getPosition() + anchorShapes[1].getPosition()) / 2.f;
-        midPoint = {"Mid-point", midPos, anchorShapes[0].getSize() * 0.5f};
+        // Only recalculate midpoint if we're NOT currently dragging anything
+        // AND if it hasn't been manually moved yet
+        // if (anchorPointCount == 2 && !isDragging) {
+        //     sf::Vector2f midPos = (controlShapes[0].getPosition() + controlShapes[1].getPosition()) / 2.f;
+        //     midPoint = {"Mid-point", midPos, controlShapes[0].getSize() * 0.5f};
+        //
+        //     controlShapes[2].setSize(sf::Vector2f(midPoint.size.x, midPoint.size.y));
+        //     controlShapes[2].setPosition({midPoint.position.x, midPoint.position.y});
+        //     controlShapes[2].setFillColor(sf::Color::Red);
+        // }
 
         std::cout << "midPoint: " << midPoint.position.x << ", " << midPoint.position.y << std::endl;
     }
@@ -149,12 +81,20 @@ namespace ui::elements {
     void LineTool::handleMouseButtonPressed(sf::Vector2f &mousePos) {
         // First check if we're clicking on an existing anchor point for dragging
         for (size_t i = 0; i < anchorPointCount; ++i) {
-            if (anchorShapes[i].getGlobalBounds().contains(mousePos)) {
+            if (controlShapes[i].getGlobalBounds().contains(mousePos)) {
                 isDragging = true;
                 draggedShapeIndex = i;
-                dragOffset = mousePos - anchorShapes[i].getPosition();
+                dragOffset = mousePos - controlShapes[i].getPosition();
                 return;
             }
+        }
+
+        // Then check if we've clicked on the midpoint
+        if (controlShapes.back().getGlobalBounds().contains(mousePos)) {
+            draggedShapeIndex = 2;
+            isDragging = true;
+            dragOffset = mousePos - controlShapes.back().getPosition();
+            return;
         }
 
         // Otherwise create a new anchorPoint if we haven't reached the limit
@@ -166,19 +106,28 @@ namespace ui::elements {
             common::Point anchorPoint = {"Point", mousePos, {15, 15}};
 
             // Write directly to the array at the next available index
-            anchorShapes[anchorPointCount].setSize(sf::Vector2f(anchorPoint.size.x, anchorPoint.size.y));
-            anchorShapes[anchorPointCount].setPosition({anchorPoint.position.x, anchorPoint.position.y});
-            anchorShapes[anchorPointCount].setFillColor(sf::Color::White);
+            controlShapes[anchorPointCount].setSize(sf::Vector2f(anchorPoint.size.x, anchorPoint.size.y));
+            controlShapes[anchorPointCount].setPosition({anchorPoint.position.x, anchorPoint.position.y});
+            controlShapes[anchorPointCount].setFillColor(sf::Color::White);
 
             anchorPointCount++;  // Increment our counter
 
             std::cout << "anchorPointCount after: " << anchorPointCount << std::endl;
+        }
+
+        // If we have reached the limit then we define the midpoint
+        if (anchorPointCount == 2) {
+            sf::Vector2f midPos = (controlShapes[0].getPosition() + controlShapes[1].getPosition()) / 2.f;
+            midPoint = {"Mid-point", midPos, controlShapes[0].getSize() * 0.5f};
+
+            controlShapes[2].setSize(sf::Vector2f(midPoint.size.x, midPoint.size.y));
+            controlShapes[2].setPosition({midPoint.position.x, midPoint.position.y});
+            controlShapes[2].setFillColor(sf::Color::Red);
         }
     }
 
     void LineTool::handleMouseButtonReleased() {
         // Reset our bool and dragged shape
         isDragging = false;
-        draggedShape = nullptr;
     }
 }

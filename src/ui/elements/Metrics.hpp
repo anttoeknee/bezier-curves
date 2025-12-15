@@ -12,7 +12,7 @@ namespace ui::elements {
         mutable sf::Text mousePosText;
 
     public:
-        void draw(sf::RenderWindow &target, sf::Vector2f origin) const override;
+        void draw(sf::RenderWindow &target, sf::Vector2f origin) override;
 
         void update(sf::RenderWindow &target, sf::Vector2f origin) override;
 

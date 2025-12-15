@@ -16,7 +16,7 @@ namespace ui::elements {
     public:
         explicit QuadraticBezier(std::vector<common::Point> &&startPoints);
 
-        void draw(sf::RenderWindow &target, sf::Vector2f origin) const override;
+        void draw(sf::RenderWindow &target, sf::Vector2f origin) override;
 
         void update(sf::RenderWindow &target, sf::Vector2f origin) override;
 

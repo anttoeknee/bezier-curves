@@ -3,7 +3,7 @@
 
 #include "SFML/Graphics/RectangleShape.hpp"
 
-void ui::elements::Divider::draw(sf::RenderWindow &target, sf::Vector2f origin) const {
+void ui::elements::Divider::draw(sf::RenderWindow &target, sf::Vector2f origin) {
     target.draw(line);
 }
 

@@ -8,7 +8,7 @@ ui::elements::Logo::Logo(
 ) : path(std::move(path_)) {
 }
 
-void ui::elements::Logo::draw(sf::RenderWindow &target, sf::Vector2f origin) const {
+void ui::elements::Logo::draw(sf::RenderWindow &target, sf::Vector2f origin) {
     // iterate path segments
     for (auto &segment: path.segments) {
         if (segment.type == common::SegmentType::LINE) {

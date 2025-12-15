@@ -22,7 +22,7 @@ ui::elements::LerpBezier::LerpBezier(std::vector<common::Point> &&startPoints_)
     }
 }
 
-void ui::elements::LerpBezier::draw(sf::RenderWindow &target, sf::Vector2f origin) const {
+void ui::elements::LerpBezier::draw(sf::RenderWindow &target, sf::Vector2f origin) {
     // Control points
     for (auto &controlPoint: controlPoints) {
         target.draw(*controlPoint);

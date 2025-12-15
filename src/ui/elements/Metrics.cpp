@@ -11,7 +11,7 @@ ui::elements::Metrics::Metrics(): font(core::utils::AssetManager::loadEmbeddedFo
     mousePosition({0, 0});
 }
 
-void ui::elements::Metrics::draw(sf::RenderWindow &target, sf::Vector2f origin) const {
+void ui::elements::Metrics::draw(sf::RenderWindow &target, sf::Vector2f origin) {
     target.draw(memText);
     target.draw(mousePosText);
 }

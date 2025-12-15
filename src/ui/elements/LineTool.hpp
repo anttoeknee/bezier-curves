@@ -9,10 +9,10 @@
 namespace ui::elements {
     class LineTool : public Element {
 
-        std::array<sf::RectangleShape, 2> anchorShapes;
+        std::array<sf::RectangleShape, 3> controlShapes;
         size_t anchorPointCount = 0;  // Track how many points we've created (0-2)
         common::Point midPoint; // The (invisible) half-way point between the two user selected points
-        sf::Shape *midPointShape = nullptr;
+        std::unique_ptr<sf::RectangleShape> midPointShape;
 
         // TODO: move into a shared object
         bool isDragging = false;
@@ -20,7 +20,7 @@ namespace ui::elements {
         sf::Shape *draggedShape = nullptr;
         sf::Vector2f dragOffset;
     public:
-        void draw(sf::RenderWindow &target, sf::Vector2f origin) const override;
+        void draw(sf::RenderWindow &target, sf::Vector2f origin) override;
 
         void update(sf::RenderWindow &target, sf::Vector2f origin) override;
 

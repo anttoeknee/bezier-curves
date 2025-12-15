@@ -21,7 +21,7 @@ ui::elements::QuadraticBezier::QuadraticBezier(std::vector<common::Point> &&star
     }
 }
 
-void ui::elements::QuadraticBezier::draw(sf::RenderWindow &target, sf::Vector2f origin) const {
+void ui::elements::QuadraticBezier::draw(sf::RenderWindow &target, sf::Vector2f origin) {
     // Control points
     for (auto &controlPoint: controlPoints) {
         target.draw(*controlPoint);
