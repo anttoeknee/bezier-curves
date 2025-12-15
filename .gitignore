@@ -11,3 +11,5 @@ cmake-build-release/
 CMakeCache.txt
 CMakeFiles/
 
+.DS_Store
+
