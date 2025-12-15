@@ -29,6 +29,16 @@ namespace ui::elements {
             target.draw(anchorShapes[i]);
         }
 
+        // Draw the midpoint
+        std::vector<sf::RectangleShape> midPointShapes;
+        sf::RectangleShape rect(sf::Vector2f(midPoint.size.x, midPoint.size.y));
+        rect.setPosition({midPoint.position.x, midPoint.position.y});
+        rect.setFillColor(sf::Color::Red);
+        target.draw(*std::make_unique<sf::RectangleShape>(rect));
+
+
+
+        // Draw connecting line
         if (anchorPointCount == 2) {
 
             // Lines
@@ -127,7 +137,7 @@ namespace ui::elements {
         // If we're at two anchor shapes, create a line between the two points using a quadratic curve
         // calculating the midpoint on-the-flye
         sf::Vector2f midPos = (anchorShapes[0].getPosition() + anchorShapes[1].getPosition()) / 2.f;
-        midPoint = {"Mid-point", midPos, anchorShapes[0].getSize() * 0.2f};
+        midPoint = {"Mid-point", midPos, anchorShapes[0].getSize() * 0.5f};
 
         std::cout << "midPoint: " << midPoint.position.x << ", " << midPoint.position.y << std::endl;
     }
