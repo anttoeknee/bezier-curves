@@ -45,8 +45,8 @@ void ui::elements::Logo::draw(sf::RenderWindow &target, sf::Vector2f origin) con
             common::Point mpCandidate1 = {
                 "cp candidate 1",
                 {
-                    midPoint.position.x * 0.9f,
-                    midPoint.position.y * 0.9f
+                    midPoint.position.x / (10.f/9.f),
+                    midPoint.position.y / (10.f/9.f),
                 },
                 {10, 10}
             };
