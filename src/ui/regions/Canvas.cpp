@@ -37,6 +37,10 @@ void ui::regions::Canvas::handleMouseButtonReleased() {
     for (auto &element: elements) {
         element->handleMouseButtonReleased();
     }
+
+    if (activeTool != nullptr) {
+        activeTool->handleMouseButtonReleased();
+    }
 }
 
 void ui::regions::Canvas::draw() const {
