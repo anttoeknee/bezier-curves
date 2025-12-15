@@ -21,6 +21,8 @@ public:
 private:
     sf::RenderWindow window;
 
+    const std::string APP_REGION_PEN_TOOL = "Primitive Pen Tool";
+
     void handleEvents();
 
     void update();

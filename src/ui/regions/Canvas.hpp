@@ -1,5 +1,6 @@
 #pragma once
 #include "Region.hpp"
+#include "../elements/LineTool.hpp"
 #include "../elements/QuadraticBezier.hpp"
 
 namespace ui::regions {
@@ -7,6 +8,7 @@ namespace ui::regions {
         std::vector<common::Point> startPoints{};
         mutable sf::View clippedView;
         mutable std::string name;
+        std::unique_ptr<elements::Element> activeTool;
 
     public:
         Canvas(
@@ -28,6 +30,12 @@ namespace ui::regions {
         void draw() const override;
 
         void update() const override;
+
+        void setActiveTool(std::unique_ptr<elements::Element> &&element);
+
+        elements::Element* getActiveTool() const {
+            return activeTool.get();
+        }
     };
 }
 

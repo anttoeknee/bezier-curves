@@ -52,6 +52,8 @@ namespace ui::regions {
 
         sf::Vector2f getSize() const { return _size; }
 
+        std::string getName() const { return _name; }
+
         virtual ~Region() = default;
     };
 }

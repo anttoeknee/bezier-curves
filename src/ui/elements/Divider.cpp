@@ -7,7 +7,7 @@ void ui::elements::Divider::draw(sf::RenderWindow &target, sf::Vector2f origin) 
     target.draw(line);
 }
 
-void ui::elements::Divider::update(sf::RenderWindow &target, sf::Vector2f origin) const {
+void ui::elements::Divider::update(sf::RenderWindow &target, sf::Vector2f origin) {
     // TODO: find way to pass values in
     line = sf::RectangleShape({1080, 1.f});
     line.setPosition({0, 401});

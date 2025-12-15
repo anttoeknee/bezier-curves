@@ -43,7 +43,7 @@ void ui::elements::QuadraticBezier::draw(sf::RenderWindow &target, sf::Vector2f 
     target.draw(&bezierLine[0], bezierLine.size(), sf::PrimitiveType::LineStrip);
 }
 
-void ui::elements::QuadraticBezier::update(sf::RenderWindow &target, sf::Vector2f origin) const {
+void ui::elements::QuadraticBezier::update(sf::RenderWindow &target, sf::Vector2f origin) {
     // Handle dragging
     if (isDragging && draggedShape) {
         sf::Vector2i mousePos = sf::Mouse::getPosition(target);

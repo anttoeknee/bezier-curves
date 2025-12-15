@@ -100,7 +100,6 @@ App::App(core::utils::Config config)
     // Bezier Curves
     auto quadBez = std::make_unique<ui::elements::QuadraticBezier>(std::move(startPoints1));
     auto lerpBez = std::make_unique<ui::elements::LerpBezier>(std::move(startPoints2));
-    auto penTool = std::make_unique<ui::elements::LineTool>(std::move(startPoints3));
 
     // Logo
     auto logo = std::make_unique<ui::elements::Logo>(std::move(logoPath));
@@ -125,8 +124,7 @@ App::App(core::utils::Config config)
 
     // Bottom right region
     std::vector<std::unique_ptr<ui::elements::Element>> bottomRightRegionElements;
-    bottomRightRegionElements.push_back(std::move(penTool));
-    auto bottomRightRegion = std::make_unique<ui::regions::Canvas>(window, std::move(bottomRightRegionElements), sf::Vector2f{545, 411}, sf::Vector2f{525, 390}, "Primitive Pen Tool");
+    auto bottomRightRegion = std::make_unique<ui::regions::Canvas>(window, std::move(bottomRightRegionElements), sf::Vector2f{545, 411}, sf::Vector2f{525, 390}, this->APP_REGION_PEN_TOOL);
     
     // Side region
     std::vector<std::unique_ptr<ui::elements::Element>> sideRegionElements;
@@ -167,11 +165,34 @@ void App::handleEvents() {
         // Handle mouse down
         if (event->is<sf::Event::MouseButtonPressed>()) {
             sf::Vector2f mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
+
+            std::cout << "mousePos: " << mousePos.x << ", " << mousePos.y << std::endl;
+
             for (auto &region: regions) {
+
+                std::cout << "regionPos: " << region->getPosition().x << ", " << region->getPosition().y << std::endl;
+
                 if (
-                    mousePos.y > region->getPosition().y && mousePos.y < (region->getSize().y + region->getPosition().y)
-                    && mousePos.x > region->getPosition().x && mousePos.x < (region->getSize().x + region->getPosition().x)
+                    mousePos.x > region->getPosition().x && mousePos.x < (region->getSize().x + region->getPosition().x)
+                    && mousePos.y > region->getPosition().y && mousePos.y < (region->getSize().y + region->getPosition().y)
                 ) {
+                    std::cout << "Region matched!" << std::endl;
+
+                    // Some hacky code to force pen tool behavior on the Canvas instance
+                    if (region->getName() == this->APP_REGION_PEN_TOOL) {
+                        auto* canvas = dynamic_cast<ui::regions::Canvas*>(region.get());
+                        if (canvas) {
+
+                            // Only create if there's no active tool yet
+                            if (!canvas->getActiveTool()) {
+                                canvas->setActiveTool(std::make_unique<ui::elements::LineTool>());
+                            }
+
+                            if (canvas->getActiveTool() != nullptr) {
+                                canvas->getActiveTool()->handleMouseButtonPressed(mousePos);
+                            }
+                        }
+                    }
                     region->handleMouseButtonPressed(mousePos);
                 }
             }

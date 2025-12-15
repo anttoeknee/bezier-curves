@@ -58,7 +58,7 @@ void ui::elements::LerpBezier::draw(sf::RenderWindow &target, sf::Vector2f origi
     }
 }
 
-void ui::elements::LerpBezier::update(sf::RenderWindow &target, sf::Vector2f origin) const {
+void ui::elements::LerpBezier::update(sf::RenderWindow &target, sf::Vector2f origin) {
     // Handle dragging
     if (isDragging && draggedShape) {
         sf::Vector2i mousePos = sf::Mouse::getPosition(target);

@@ -16,7 +16,7 @@ void ui::elements::Metrics::draw(sf::RenderWindow &target, sf::Vector2f origin) 
     target.draw(mousePosText);
 }
 
-void ui::elements::Metrics::update(sf::RenderWindow &target, sf::Vector2f origin) const {
+void ui::elements::Metrics::update(sf::RenderWindow &target, sf::Vector2f origin) {
     memoryUsage(origin);
 }
 

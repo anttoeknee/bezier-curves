@@ -24,9 +24,13 @@ void ui::regions::Canvas::handleMouseMove(sf::Vector2f &mousePos) {
 }
 
 void ui::regions::Canvas::handleMouseButtonPressed(sf::Vector2f &mousePos) {
+
+    // Pass to all elements (maybe we narrow down scope here like we do for regions?)
     for (auto &element: elements) {
         element->handleMouseButtonPressed(mousePos);
     }
+
+
 }
 
 void ui::regions::Canvas::handleMouseButtonReleased() {
@@ -63,6 +67,10 @@ void ui::regions::Canvas::draw() const {
         element->draw(target, _position);
     }
 
+    if (activeTool != nullptr) {
+        activeTool->draw(target, _position);
+    }
+
     target.draw(title);
 
     target.setView(oldView);
@@ -73,3 +81,9 @@ void ui::regions::Canvas::update() const {
         element->update(target, _position);
     }
 }
+
+void ui::regions::Canvas::setActiveTool(std::unique_ptr<elements::Element> &&element) {
+    activeTool = std::move(element);
+}
+
+

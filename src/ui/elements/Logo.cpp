@@ -115,7 +115,7 @@ void ui::elements::Logo::draw(sf::RenderWindow &target, sf::Vector2f origin) con
     }
 }
 
-void ui::elements::Logo::update(sf::RenderWindow &target, sf::Vector2f origin) const {
+void ui::elements::Logo::update(sf::RenderWindow &target, sf::Vector2f origin) {
 }
 
 void ui::elements::Logo::handleMouseMove(sf::Vector2f &mousePos) {
