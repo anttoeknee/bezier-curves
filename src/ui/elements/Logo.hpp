@@ -1,7 +1,6 @@
 #pragma once
 #include "Element.hpp"
 #include "../common/Path.hpp"
-#include "../common/Point.hpp"
 #include "SFML/Graphics/Shape.hpp"
 
 namespace ui::elements {
