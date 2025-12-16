@@ -15,12 +15,19 @@ namespace ui::rendering::bezier {
         target.draw(&bezierLine[0], bezierLine.size(), sf::PrimitiveType::LineStrip);
     }
 
-    void drawControlPoint(sf::RenderWindow &target, const sf::Vector2f &position, const sf::Vector2f &size,
-                          const sf::Color &color) {
-        sf::RectangleShape rect(size);
-        rect.setPosition(position);
-        rect.setFillColor(color);
-        target.draw(rect);
+    void drawControlPoint(sf::RenderWindow &target, const sf::RectangleShape &controlPoint) {
+        target.draw(controlPoint);
+    }
+
+    std::unique_ptr<sf::RectangleShape> createControlPoint(const sf::Vector2f &position, const sf::Vector2f &size,
+        const sf::Color &color) {
+
+        auto rect = std::make_unique<sf::RectangleShape>(size);
+
+        rect->setPosition(position);
+        rect->setFillColor(color);
+
+        return rect;
     }
 
     void drawControlLine(sf::RenderWindow &target, const sf::Vector2f &from, const sf::Vector2f &to,

@@ -86,6 +86,7 @@ add_executable(
         src/ui/elements/LineTool.cpp
         src/ui/rendering/Bezier.hpp
         src/ui/rendering/Bezier.cpp
+        src/ui/common/ControlPoint.hpp
 
 )
 

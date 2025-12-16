@@ -31,11 +31,16 @@ namespace ui::elements {
                 controlShapes[1].getPosition()
             );
 
-            // Draw the midpoint
+            // Create and draw the midpoint
+            auto shape = rendering::bezier::createControlPoint(
+                controlShapes.back().getPosition(),
+                controlShapes.back().getSize(),
+                sf::Color::Red
+            );
+
             rendering::bezier::drawControlPoint(
                 target,
-                controlShapes.back().getPosition(),
-                controlShapes.back().getSize()
+                *shape
             );
 
             // Draw the midpoint to control point line (always anchored to first point)

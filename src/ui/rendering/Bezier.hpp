@@ -1,4 +1,5 @@
 #pragma once
+#include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Graphics/RenderWindow.hpp"
 
 namespace ui::rendering::bezier {
@@ -13,9 +14,13 @@ namespace ui::rendering::bezier {
 
     void drawControlPoint(
         sf::RenderWindow &target,
+        const sf::RectangleShape &controlPoint
+    );
+
+    std::unique_ptr<sf::RectangleShape> createControlPoint(
         const sf::Vector2f &position,
         const sf::Vector2f &size,
-        const sf::Color &color = sf::Color::Red
+        const sf::Color &color = sf::Color::White
     );
 
     void drawControlLine(

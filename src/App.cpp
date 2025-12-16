@@ -54,7 +54,7 @@ App::App(core::utils::Config config)
         {"Point 3", {675, 100}, {5, 5}},
     }});
 
-    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::LINE, {
+    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::CURVE, {
         {"Point 3", {675, 100}, {5, 5}},
         {"Point 4", {665, 175}, {5, 5}},
     }});
@@ -83,18 +83,22 @@ App::App(core::utils::Config config)
 
     logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::LINE, {
         {"Point 8", {775, 350}, {5, 5}},
-        {"Point 9", {775, 175}, {5, 5}},
+        {"Point 9", {775, 225}, {5, 5}},
     }});
 
     logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::CURVE, {
-        {"Point 9", {775, 350}, {5, 5}},
-        // control point here
-        {"Point 10", {775, 175}, {5, 5}},
+        {"Point 9", {775, 225}, {5, 5}},
+        {"Point 10", {675, 225}, {5, 5}}
     }});
 
     logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::LINE, {
-        {"Point 10", {675, 175}, {5, 5}},
+        {"Point 10", {675, 225}, {5, 5}},
         {"Point 11", {675, 350}, {5, 5}}
+    }});
+
+    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::LINE, {
+        {"Point 11", {675, 350}, {5, 5}},
+        {"Point 12", {600, 350}, {5, 5}}
     }});
 
     // Bezier Curves

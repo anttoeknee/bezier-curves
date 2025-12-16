@@ -1,12 +1,24 @@
 #pragma once
 #include "Element.hpp"
 #include "../common/Path.hpp"
-#include "SFML/Graphics/Shape.hpp"
+#include "SFML/Graphics/RectangleShape.hpp"
+#include "../common/ControlPoint.hpp"
+
+namespace ui::common {
+    struct ControlPoint;
+}
 
 namespace ui::elements {
 
     class Logo : public Element {
         common::Path path;
+
+        std::vector<common::ControlPoint> controlPoints;
+        common::ControlPoint* draggedControlPoint = nullptr;
+
+        bool isDragging = false;
+        sf::Vector2f dragOffset;
+        bool shapesInitialized = false;
 
     public:
         explicit Logo(
