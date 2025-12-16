@@ -45,10 +45,10 @@ void ui::elements::Logo::draw(sf::RenderWindow &target, sf::Vector2f origin) {
             common::Point mpCandidate1 = {
                 "cp candidate 1",
                 {
-                    midPoint.position.x / (10.f/9.f),
-                    midPoint.position.y / (10.f/9.f),
+                    midPoint.position.x * 0.95f,
+                    midPoint.position.y * 0.95f,
                 },
-                {10, 10}
+                {10.f, 10.f}
             };
 
             common::Point mpCandidate2 = {
@@ -57,7 +57,7 @@ void ui::elements::Logo::draw(sf::RenderWindow &target, sf::Vector2f origin) {
                     midPoint.position.x * 1.1f,
                     midPoint.position.y * 1.1f
                 },
-                {10, 10}
+                {10.f, 10.f}
             };
 
             std::vector midPointCtrlPointCandidates = { mpCandidate1, mpCandidate2 };

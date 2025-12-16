@@ -8,6 +8,7 @@
 #include "SFML/Graphics/Vertex.hpp"
 #include "../../core/math/Geometry.hpp"
 #include "../common/Path.hpp"
+#include "../rendering/Bezier.hpp"
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Graphics/Shape.hpp"
 #include "SFML/Window/Mouse.hpp"
@@ -20,33 +21,30 @@ namespace ui::elements {
             target.draw(controlShapes[i]);
         }
 
-        // Draw connecting line
+        // Draw connecting line (what will be the curve)
         if (anchorPointCount == 2) {
 
-            // Lines
-            std::vector<sf::Vertex> bezierLine;
-            for (float t = 0; t <= 1.0f; t += 0.01f) {
-                sf::Vector2f point = core::math::quadraticBezier(
-                    controlShapes[0].getPosition(),
-                    controlShapes[2].getPosition(),
-                    controlShapes[1].getPosition(),
-                    t
-                );
-                bezierLine.push_back(sf::Vertex({point, sf::Color::White}));
-            }
-
-            // Apparently, SFML draws the rest of the vertices; we only need to say where to start from
-            target.draw(&bezierLine[0], bezierLine.size(), sf::PrimitiveType::LineStrip);
+            rendering::bezier::drawQuadraticCurve(
+                target,
+                controlShapes[0].getPosition(),
+                controlShapes[2].getPosition(),
+                controlShapes[1].getPosition()
+            );
 
             // Draw the midpoint
-            target.draw(controlShapes.back());
+            rendering::bezier::drawControlPoint(
+                target,
+                controlShapes.back().getPosition(),
+                controlShapes.back().getSize()
+            );
 
             // Draw the midpoint to control point line (always anchored to first point)
-            sf::Vertex line1[] = {
-                sf::Vertex(controlShapes[0].getPosition(), sf::Color::Cyan),
-                sf::Vertex(controlShapes[2].getPosition(), sf::Color::Cyan)
-            };
-            target.draw(line1, 2, sf::PrimitiveType::Lines);
+            rendering::bezier::drawControlLine(
+                target,
+                controlShapes[0].getPosition(),
+                controlShapes[2].getPosition(),
+                sf::Color::Cyan
+            );
         }
     }
 
@@ -59,17 +57,6 @@ namespace ui::elements {
             sf::Vector2f mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(target));
             controlShapes[draggedShapeIndex].setPosition(mousePos - dragOffset);
         }
-
-        // Only recalculate midpoint if we're NOT currently dragging anything
-        // AND if it hasn't been manually moved yet
-        // if (anchorPointCount == 2 && !isDragging) {
-        //     sf::Vector2f midPos = (controlShapes[0].getPosition() + controlShapes[1].getPosition()) / 2.f;
-        //     midPoint = {"Mid-point", midPos, controlShapes[0].getSize() * 0.5f};
-        //
-        //     controlShapes[2].setSize(sf::Vector2f(midPoint.size.x, midPoint.size.y));
-        //     controlShapes[2].setPosition({midPoint.position.x, midPoint.position.y});
-        //     controlShapes[2].setFillColor(sf::Color::Red);
-        // }
 
         std::cout << "midPoint: " << midPoint.position.x << ", " << midPoint.position.y << std::endl;
     }
