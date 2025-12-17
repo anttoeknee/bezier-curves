@@ -8,7 +8,7 @@ ui::regions::Debug::Debug(sf::RenderWindow &target, std::vector<std::unique_ptr<
     _size = size;
 }
 
-void ui::regions::Debug::draw() const {
+void ui::regions::Debug::draw() {
     target.draw(container);
 
     for (auto &element : elements) {
@@ -16,7 +16,7 @@ void ui::regions::Debug::draw() const {
     }
 }
 
-void ui::regions::Debug::update() const {
+void ui::regions::Debug::update() {
 
     container = sf::RectangleShape(_size);
     container.setPosition(_position);

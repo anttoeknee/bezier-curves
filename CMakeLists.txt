@@ -11,8 +11,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 include(FetchContent)
 
-#set(SFML_BUILD_GRAPHICS ON CACHE INTERNAL "")
-
 # SFML setup (this overrides any system installation)
 FetchContent_Declare(SFML
         GIT_REPOSITORY https://github.com/SFML/SFML.git
@@ -30,25 +28,6 @@ FetchContent_Declare(
 )
 
 FetchContent_MakeAvailable(nlohmann_json)
-
-
-
-# Set TGUI backend before fetching TGUI
-#set(TGUI_BUILD_FRAMEWORK OFF CACHE BOOL "" FORCE)
-#set(TGUI_BACKEND SFML_GRAPHICS CACHE STRING "" FORCE)
-#
-#
-## Point to the correct SFML_DIR
-#set(SFML_DIR "${CMAKE_BINARY_DIR}/_deps/sfml-build" CACHE PATH "" FORCE)
-#
-## Fetch TGUI
-#FetchContent_Declare(tgui
-#        GIT_REPOSITORY https://github.com/texus/TGUI.git
-#        GIT_TAG v1.9.0
-#        GIT_SHALLOW ON
-#)
-#
-#FetchContent_MakeAvailable(tgui)
 
 # Create the executable
 add_executable(

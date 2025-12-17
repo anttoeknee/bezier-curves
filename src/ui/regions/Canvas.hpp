@@ -6,8 +6,6 @@
 namespace ui::regions {
     class Canvas : public Region {
         std::vector<common::Point> startPoints{};
-        mutable sf::View clippedView;
-        mutable std::string name;
         std::unique_ptr<elements::Element> activeTool;
 
     public:
@@ -27,9 +25,9 @@ namespace ui::regions {
 
         void handleMouseButtonPressed(sf::Vector2f &mousePos) override;
 
-        void draw() const override;
+        void draw() override;
 
-        void update() const override;
+        void update() override;
 
         void setActiveTool(std::unique_ptr<elements::Element> &&element);
 

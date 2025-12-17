@@ -32,9 +32,9 @@ namespace ui::regions {
 
         Region(sf::RenderWindow &target, std::vector<std::unique_ptr<elements::Element>> &&elements);
 
-        virtual void draw() const = 0;
+        virtual void draw() = 0;
 
-        virtual void update() const = 0;
+        virtual void update() = 0;
 
         void addElement(std::unique_ptr<elements::Element> element) {
             elements.push_back(std::move(element));
@@ -57,13 +57,3 @@ namespace ui::regions {
         virtual ~Region() = default;
     };
 }
-
-
-// TODO: maybe move this at a later date?
-// inline ui::regions::Region::Region(sf::RenderWindow &target,
-//                                    const std::vector<std::unique_ptr<elements::Element> > &
-//                                    elements) : elements(elements), target(target) {
-// }
-
-// inline ui::regions::Region::Region(sf::RenderWindow &target, const std::vector<std::unique_ptr<elements::Element> > &elements): target(target) {
-// }

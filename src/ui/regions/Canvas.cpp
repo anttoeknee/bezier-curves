@@ -43,7 +43,7 @@ void ui::regions::Canvas::handleMouseButtonReleased() {
     }
 }
 
-void ui::regions::Canvas::draw() const {
+void ui::regions::Canvas::draw() {
     sf::Vector2f windowSize = static_cast<sf::Vector2f>(target.getSize());
 
     sf::View oldView = target.getView();
@@ -80,7 +80,7 @@ void ui::regions::Canvas::draw() const {
     target.setView(oldView);
 }
 
-void ui::regions::Canvas::update() const {
+void ui::regions::Canvas::update() {
     for (auto &element: elements) {
         element->update(target, _position);
     }
