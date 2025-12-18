@@ -16,8 +16,8 @@
 #include "ui/regions/Debug.hpp"
 
 
-App::App(core::utils::Config config)
-    : config(),
+App::App(core::utils::Config cfg)
+    : config(std::move(cfg)),
       window(sf::VideoMode({
                  config.windowWidth, config.windowHeight
              }), config.title, sf::Style::Titlebar | sf::Style::Close | sf::Style::Resize, sf::State::Windowed
