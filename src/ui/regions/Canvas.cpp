@@ -48,7 +48,7 @@ void ui::regions::Canvas::draw() {
 
     sf::View oldView = target.getView();
 
-    utils::ScopedWindowClipping sWinClip(target, _position, windowSize);
+    utils::ScopedWindowClipping sWinClip(target, _position, _size);
 
     sf::RectangleShape background;
     background.setPosition(_position);
