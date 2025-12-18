@@ -1,12 +1,9 @@
-#ifndef APP_H
-#define APP_H
+#pragma once
 
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/Graphics/Shape.hpp"
 #include "core/utils/Config.hpp"
 #include "ui/regions/Region.hpp"
-
-#endif //APP_H
 
 class App {
 public:
