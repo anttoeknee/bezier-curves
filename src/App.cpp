@@ -2,9 +2,12 @@
 
 #include <iostream>
 #include <ranges>
+#include <fstream>
+#include <nlohmann/json.hpp>
 
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/Text.hpp"
+#include "core/utils/JsonUtils.hpp"
 #include "ui/common/Path.hpp"
 #include "ui/elements/Divider.hpp"
 #include "ui/elements/Element.hpp"
@@ -15,6 +18,7 @@
 #include "ui/regions/Canvas.hpp"
 #include "ui/regions/Debug.hpp"
 
+using json = nlohmann::json;
 
 App::App(core::utils::Config cfg)
     : config(std::move(cfg)),
@@ -24,82 +28,25 @@ App::App(core::utils::Config cfg)
       ) {
     window.setFramerateLimit(120);
 
-    // TODO: move these to some sort of data file, then read them in?
-    std::vector<ui::common::Point> startPoints1 = {
-        {"Point 1", {50, 350}, {15, 15}},
-        {"Point 2", {250, 50}, {15, 15}},
-        {"Point 3", {450, 275}, {15, 15}}
-    };
+    // Load point data from JSON
+    std::vector<ui::common::Point> startPoints1;
+    std::vector<ui::common::Point> startPoints2;
+    ui::common::Path logoPath{"" "Logo"};
 
-    std::vector<ui::common::Point> startPoints2 = {
-        {"Point 3", {50, 761}, {15, 15}},
-        {"Point 4", {250, 461}, {15, 15}},
-        {"Point 5", {450, 686}, {15, 15}}
-    };
+    try {
+        std::ifstream f("points.json");
+        if (!f.is_open()) {
+            throw std::runtime_error("Could not open points.json");
+        }
+        json data = json::parse(f);
 
-    std::vector<ui::common::Point> startPoints3 = {
-        {"Point 6", {600, 711}, {15, 15}},
-        {"Point 7", {961, 486}, {15, 15}}
-    };
-
-    // Logo
-    ui::common::Path logoPath{"Logo"};
-    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::LINE, {
-        {"Point 1", {600, 350}, {5, 5}},
-        {"Point 2", {600, 100}, {5, 5}},
-    }});
-
-    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::LINE, {
-        {"Point 2", {600, 100}, {5, 5}},
-        {"Point 3", {675, 100}, {5, 5}},
-    }});
-
-    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::CURVE, {
-        {"Point 3", {675, 100}, {5, 5}},
-        {"Point 4", {665, 175}, {5, 5}},
-    }});
-
-    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::CURVE, {
-        {"Point 4", {665, 175}, {5, 5}},
-        // control point here
-        {"Point 5", {750, 100}, {5, 5}},
-    }});
-
-    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::CURVE, {
-        {"Point 5", {750, 100}, {5, 5}},
-        // control point here
-        {"Point 6", {850, 175}, {5, 5}},
-    }});
-
-    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::LINE, {
-        {"Point 6", {850, 175}, {5, 5}},
-        {"Point 7", {850, 350}, {5, 5}},
-    }});
-
-    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::LINE, {
-        {"Point 7", {850, 350}, {5, 5}},
-        {"Point 8", {775, 350}, {5, 5}},
-    }});
-
-    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::LINE, {
-        {"Point 8", {775, 350}, {5, 5}},
-        {"Point 9", {775, 225}, {5, 5}},
-    }});
-
-    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::CURVE, {
-        {"Point 9", {775, 225}, {5, 5}},
-        {"Point 10", {675, 225}, {5, 5}}
-    }});
-
-    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::LINE, {
-        {"Point 10", {675, 225}, {5, 5}},
-        {"Point 11", {675, 350}, {5, 5}}
-    }});
-
-    logoPath.segments.push_back(ui::common::Segment{ui::common::SegmentType::LINE, {
-        {"Point 11", {675, 350}, {5, 5}},
-        {"Point 12", {600, 350}, {5, 5}}
-    }});
+        startPoints1 = core::utils::parsePointArray(data["startPoints1"]);
+        startPoints2 = core::utils::parsePointArray(data["startPoints2"]);
+        logoPath = core::utils::parsePath(data["logoPath"]);
+    } catch (const std::exception& e) {
+        std::cerr << "Error loading points.json: " << e.what() << "\n";
+        // Fallback to default values if needed
+    }
 
     // Bezier Curves
     auto quadBez = std::make_unique<ui::elements::QuadraticBezier>(std::move(startPoints1));

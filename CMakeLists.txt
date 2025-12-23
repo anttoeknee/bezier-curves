@@ -36,6 +36,8 @@ add_executable(
         src/App.cpp
         src/core/utils/Mem.hpp
         src/core/utils/Config.hpp
+        src/core/utils/JsonUtils.hpp
+        src/core/utils/JsonUtils.cpp
         src/ui/elements/Element.hpp
         src/ui/elements/QuadraticBezier.cpp
         src/core/math/Geometry.hpp
@@ -108,6 +110,12 @@ add_custom_command(TARGET main POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${CMAKE_SOURCE_DIR}/config.json
         $<TARGET_FILE_DIR:main>/config.json)
+
+# Move points.json to the binary directory
+add_custom_command(TARGET main POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        ${CMAKE_SOURCE_DIR}/points.json
+        $<TARGET_FILE_DIR:main>/points.json)
 
 # Add platform-specific source
 if (APPLE)
