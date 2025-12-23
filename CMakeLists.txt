@@ -36,8 +36,8 @@ add_executable(
         src/App.cpp
         src/core/utils/Mem.hpp
         src/core/utils/Config.hpp
-        src/core/utils/JsonUtils.hpp
-        src/core/utils/JsonUtils.cpp
+        src/core/utils/Json.hpp
+        src/core/utils/Json.cpp
         src/ui/elements/Element.hpp
         src/ui/elements/QuadraticBezier.cpp
         src/core/math/Geometry.hpp

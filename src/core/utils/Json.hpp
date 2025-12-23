@@ -6,7 +6,7 @@
 #include "../../ui/common/Segment.hpp"
 #include "../../ui/common/Path.hpp"
 
-namespace core::utils {
+namespace core::utils::json {
     using json = nlohmann::json;
 
     ui::common::Point parsePoint(const json& j);

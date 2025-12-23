@@ -1,7 +1,7 @@
-#include "JsonUtils.hpp"
+#include "Json.hpp"
 #include "SFML/System/Vector2.hpp"
 
-namespace core::utils {
+namespace core::utils::json {
     ui::common::Point parsePoint(const json& j) {
         return {
             j["name"].get<std::string>(),

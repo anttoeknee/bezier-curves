@@ -7,7 +7,7 @@
 
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/Text.hpp"
-#include "core/utils/JsonUtils.hpp"
+#include "core/utils/Json.hpp"
 #include "ui/common/Path.hpp"
 #include "ui/elements/Divider.hpp"
 #include "ui/elements/Element.hpp"
@@ -40,12 +40,11 @@ App::App(core::utils::Config cfg)
         }
         json data = json::parse(f);
 
-        startPoints1 = core::utils::parsePointArray(data["startPoints1"]);
-        startPoints2 = core::utils::parsePointArray(data["startPoints2"]);
-        logoPath = core::utils::parsePath(data["logoPath"]);
+        startPoints1 = core::utils::json::parsePointArray(data["startPoints1"]);
+        startPoints2 = core::utils::json::parsePointArray(data["startPoints2"]);
+        logoPath = core::utils::json::parsePath(data["logoPath"]);
     } catch (const std::exception& e) {
         std::cerr << "Error loading points.json: " << e.what() << "\n";
-        // Fallback to default values if needed
     }
 
     // Bezier Curves
