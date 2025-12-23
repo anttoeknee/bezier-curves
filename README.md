@@ -39,7 +39,7 @@ and pointers (apologies for the pun).
 
 ### TODO's:
 
-- Replace hard coded geometry data in App.cpp with fed data from JSON demonstrating file I/O (coming soon)
+- ~~Replace hard coded geometry data in App.cpp with fed data from JSON demonstrating file I/O (coming soon)~~
 - Update all Anchor Points in paths with an offset so they're centred on the line (also coming soon)
 - Abstract SFML library behind shared objects and then substitute SFML with D2D for Windows and Core Graphics for MacOS (Will take some time)
 - Introduce a Ray Casting implementation to visualise the drawn shapes in an interactive environment (for fun really, nice to have)
