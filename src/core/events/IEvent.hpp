@@ -1,6 +1,7 @@
-
 #pragma once
 
-struct IEvent {
-    virtual ~IEvent() = default;
-};
+namespace core::events {
+    struct IEvent {
+        virtual ~IEvent() = default;
+    };
+}
