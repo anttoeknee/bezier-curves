@@ -17,6 +17,9 @@
 #include "ui/elements/Metrics.hpp"
 #include "ui/regions/Canvas.hpp"
 #include "ui/regions/Debug.hpp"
+#include "core/events/EventBus.hpp"
+#include "core/mappers/SFMLMapper.hpp"
+#include "ui/events/MousePressedEvent.hpp"
 
 using json = nlohmann::json;
 
@@ -113,8 +116,18 @@ void App::handleEvents() {
         }
 
         // Handle mouse down
-        if (event->is<sf::Event::MouseButtonPressed>()) {
+        if (const auto* e = event->getIf<sf::Event::MouseButtonPressed>()) {
+
+
+
             sf::Vector2f mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
+
+            // New way to handle events more gracefully...
+            core::events::EventBus bus;
+            bus.dispatch(ui::events::MousePressedEvent{
+                core::mappers::SFMLMapper::toVector2f(mousePos),
+                core::mappers::SFMLMapper::toMouseButton(e->button)
+            });
 
             std::cout << "mousePos: " << mousePos.x << ", " << mousePos.y << std::endl;
 

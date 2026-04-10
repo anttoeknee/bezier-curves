@@ -70,9 +70,11 @@ add_executable(
         src/ui/common/ControlPoint.hpp
         src/core/events/EventBus.hpp
         src/core/events/IEvent.hpp
-        src/ui/events/MousePressedEvent.cpp
+        src/ui/events/MousePressedEvent.hpp
         src/core/common/MouseButton.hpp
         src/core/common/Vector2f.hpp
+        src/core/mappers/SFMLMapper.hpp
+        src/core/mappers/SFMLMapper.cpp
 
 )
 
