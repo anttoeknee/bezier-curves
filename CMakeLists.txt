@@ -68,6 +68,8 @@ add_executable(
         src/ui/rendering/Bezier.hpp
         src/ui/rendering/Bezier.cpp
         src/ui/common/ControlPoint.hpp
+        src/core/events/EventBus.hpp
+        src/core/events/IEvent.hpp
 
 )
 
