@@ -68,9 +68,9 @@ App::App(core::utils::Config cfg)
     auto topLeftRegion = std::make_unique<ui::regions::Canvas>(window, std::move(topLeftRegionElements),
                                                                sf::Vector2f{10, 10}, sf::Vector2f{525, 390},
                                                                ui::common::toString(
-                                                                   ui::common::RegionNamesEnum::PenTool
+                                                                   ui::common::RegionNamesEnum::Quad
                                                                ),
-                                                               ui::common::RegionNamesEnum::PenTool);
+                                                               ui::common::RegionNamesEnum::Quad);
 
     // Top right region
     std::vector<std::unique_ptr<ui::elements::Element> > topRightRegionElements;
@@ -129,15 +129,15 @@ void App::bindEvents() {
     // grab raw observing pointer before the move (just the memory address of the pointer)
     auto* listenerPtr = mouseClickRegionMatcherListener.get();
 
+    // unique_ptr moves into vector — vector now owns it
+    listeners.push_back(std::move(mouseClickRegionMatcherListener));
+
     // lambda holds raw pointer — just observing the vector-owned object
     bus.subscribe<ui::events::MousePressedEvent>(
         [listenerPtr](const ui::events::MousePressedEvent &e) {
             listenerPtr->onEvent(e);
         }
     );
-
-    // unique_ptr moves into vector — vector now owns it
-    listeners.push_back(std::move(mouseClickRegionMatcherListener));
 }
 
 void App::handleEvents() {
