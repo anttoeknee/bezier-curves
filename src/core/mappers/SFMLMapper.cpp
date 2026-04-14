@@ -12,7 +12,11 @@ namespace core::mappers::SFMLMapper {
     }
 
     Vector2f toVector2f(sf::Vector2f v) {
-        return core::Vector2f{v.x, v.y};
+        return Vector2f{v.x, v.y};
+    }
+
+    sf::Vector2f toSfVector2f(Vector2f v) {
+        return {v.x, v.y};
     }
 }
 

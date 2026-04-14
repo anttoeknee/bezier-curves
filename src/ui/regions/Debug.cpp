@@ -33,7 +33,7 @@ void ui::regions::Debug::handleMouseMove(sf::Vector2f &mousePos) {
     }
 }
 
-void ui::regions::Debug::handleMouseButtonPressed(sf::Vector2f &mousePos) {
+void ui::regions::Debug::handleMouseButtonPressed(const core::Vector2f &mousePos) {
     for (auto &element : elements) {
         element->handleMouseButtonPressed(mousePos);
     }

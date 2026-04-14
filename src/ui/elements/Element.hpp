@@ -1,5 +1,6 @@
 #pragma once
 #include "SFML/Graphics/RenderWindow.hpp"
+#include "../../core/common/Vector2f.hpp"
 
 namespace ui::elements {
     struct Element {
@@ -10,7 +11,7 @@ namespace ui::elements {
 
         virtual void handleMouseMove(sf::Vector2f &mousePos) = 0;
 
-        virtual void handleMouseButtonPressed(sf::Vector2f &mousePos) = 0;
+        virtual void handleMouseButtonPressed(const core::Vector2f &mousePos) = 0;
 
         virtual void handleMouseButtonReleased() = 0;
 

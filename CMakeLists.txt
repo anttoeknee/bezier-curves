@@ -75,6 +75,10 @@ add_executable(
         src/core/common/Vector2f.hpp
         src/core/mappers/SFMLMapper.hpp
         src/core/mappers/SFMLMapper.cpp
+        src/ui/listeners/MouseClickRegionMatcherListener.hpp
+        src/ui/listeners/MouseClickRegionMatcherListener.cpp
+        src/ui/common/RegionNamesEnum.hpp
+        src/core/listeners/IListener.hpp
 
 )
 

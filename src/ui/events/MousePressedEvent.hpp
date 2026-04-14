@@ -1,5 +1,9 @@
 #pragma once
 
+#include "../../core/common/MouseButton.hpp"
+#include "../../core/common/Vector2f.hpp"
+#include "../../core/events/IEvent.hpp"
+
 namespace ui::events {
     struct MousePressedEvent : public core::events::IEvent {
         core::Vector2f position;
@@ -10,3 +14,4 @@ namespace ui::events {
         }
     };
 }
+

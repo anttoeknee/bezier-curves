@@ -19,7 +19,9 @@
 #include "ui/regions/Debug.hpp"
 #include "core/events/EventBus.hpp"
 #include "core/mappers/SFMLMapper.hpp"
+#include "ui/common/RegionNamesEnum.hpp"
 #include "ui/events/MousePressedEvent.hpp"
+#include "ui/listeners/MouseClickRegionMatcherListener.hpp"
 
 using json = nlohmann::json;
 
@@ -46,7 +48,7 @@ App::App(core::utils::Config cfg)
         startPoints1 = core::utils::json::parsePointArray(data["startPoints1"]);
         startPoints2 = core::utils::json::parsePointArray(data["startPoints2"]);
         logoPath = core::utils::json::parsePath(data["logoPath"]);
-    } catch (const std::exception& e) {
+    } catch (const std::exception &e) {
         std::cerr << "Error loading points.json: " << e.what() << "\n";
     }
 
@@ -61,28 +63,45 @@ App::App(core::utils::Config cfg)
     auto debug = std::make_unique<ui::elements::Metrics>();
 
     // Top left region
-    std::vector<std::unique_ptr<ui::elements::Element>> topLeftRegionElements;
+    std::vector<std::unique_ptr<ui::elements::Element> > topLeftRegionElements;
     topLeftRegionElements.push_back(std::move(quadBez));
-    auto topLeftRegion = std::make_unique<ui::regions::Canvas>(window, std::move(topLeftRegionElements), sf::Vector2f{10, 10}, sf::Vector2f{525, 390}, "Quadratic");
+    auto topLeftRegion = std::make_unique<ui::regions::Canvas>(window, std::move(topLeftRegionElements),
+                                                               sf::Vector2f{10, 10}, sf::Vector2f{525, 390},
+                                                               ui::common::toString(
+                                                                   ui::common::RegionNamesEnum::PenTool
+                                                               ),
+                                                               ui::common::RegionNamesEnum::PenTool);
 
     // Top right region
-    std::vector<std::unique_ptr<ui::elements::Element>> topRightRegionElements;
+    std::vector<std::unique_ptr<ui::elements::Element> > topRightRegionElements;
     topRightRegionElements.push_back(std::move(logo));
-    auto topRightRegion = std::make_unique<ui::regions::Canvas>(window, std::move(topRightRegionElements), sf::Vector2f{545, 10}, sf::Vector2f{525, 390}, "Logo");
+    auto topRightRegion = std::make_unique<ui::regions::Canvas>(window, std::move(topRightRegionElements),
+                                                                sf::Vector2f{545, 10}, sf::Vector2f{525, 390},
+                                                                ui::common::toString(ui::common::RegionNamesEnum::Logo),
+                                                                ui::common::RegionNamesEnum::Logo);
 
     // Bottom left region
-    std::vector<std::unique_ptr<ui::elements::Element>> bottomLeftRegionElements;
+    std::vector<std::unique_ptr<ui::elements::Element> > bottomLeftRegionElements;
     bottomLeftRegionElements.push_back(std::move(lerpBez));
-    auto bottomLeftRegion = std::make_unique<ui::regions::Canvas>(window, std::move(bottomLeftRegionElements), sf::Vector2f{10, 411}, sf::Vector2f{525, 390}, "Linear Interpolation");
+    auto bottomLeftRegion = std::make_unique<ui::regions::Canvas>(window, std::move(bottomLeftRegionElements),
+                                                                  sf::Vector2f{10, 411}, sf::Vector2f{525, 390},
+                                                                  ui::common::toString(
+                                                                      ui::common::RegionNamesEnum::Lerp),
+                                                                  ui::common::RegionNamesEnum::Lerp);
 
     // Bottom right region
-    std::vector<std::unique_ptr<ui::elements::Element>> bottomRightRegionElements;
-    auto bottomRightRegion = std::make_unique<ui::regions::Canvas>(window, std::move(bottomRightRegionElements), sf::Vector2f{545, 411}, sf::Vector2f{525, 390}, this->APP_REGION_PEN_TOOL);
-    
+    std::vector<std::unique_ptr<ui::elements::Element> > bottomRightRegionElements;
+    auto bottomRightRegion = std::make_unique<ui::regions::Canvas>(window, std::move(bottomRightRegionElements),
+                                                                   sf::Vector2f{545, 411}, sf::Vector2f{525, 390},
+                                                                   ui::common::toString(
+                                                                       ui::common::RegionNamesEnum::PenTool),
+                                                                   ui::common::RegionNamesEnum::PenTool);
+
     // Side region
-    std::vector<std::unique_ptr<ui::elements::Element>> sideRegionElements;
+    std::vector<std::unique_ptr<ui::elements::Element> > sideRegionElements;
     sideRegionElements.push_back(std::move(debug));
-    auto sideRegion = std::make_unique<ui::regions::Debug>(window, std::move(sideRegionElements), sf::Vector2f{1080, 0}, sf::Vector2f{200, 810});
+    auto sideRegion = std::make_unique<ui::regions::Debug>(window, std::move(sideRegionElements), sf::Vector2f{1080, 0},
+                                                           sf::Vector2f{200, 810});
 
     regions.push_back(std::move(topLeftRegion));
     regions.push_back(std::move(topRightRegion));
@@ -92,12 +111,33 @@ App::App(core::utils::Config cfg)
 }
 
 void App::run() {
+    bindEvents();
+
     // Render loop
     while (window.isOpen()) {
         handleEvents();
         update();
         render();
     }
+}
+
+void App::bindEvents() {
+
+    // unique_ptr — owns the listener
+    auto mouseClickRegionMatcherListener = std::make_unique<ui::listeners::MouseClickRegionMatcherListener>(regions);
+
+    // grab raw observing pointer before the move (just the memory address of the pointer)
+    auto* listenerPtr = mouseClickRegionMatcherListener.get();
+
+    // lambda holds raw pointer — just observing the vector-owned object
+    bus.subscribe<ui::events::MousePressedEvent>(
+        [listenerPtr](const ui::events::MousePressedEvent &e) {
+            listenerPtr->onEvent(e);
+        }
+    );
+
+    // unique_ptr moves into vector — vector now owns it
+    listeners.push_back(std::move(mouseClickRegionMatcherListener));
 }
 
 void App::handleEvents() {
@@ -110,55 +150,20 @@ void App::handleEvents() {
         // Handle mouse move
         if (event->is<sf::Event::MouseMoved>()) {
             sf::Vector2f mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
-            for (auto& region : regions) {
+            for (auto &region: regions) {
                 region->handleMouseMove(mousePos);
             }
         }
 
         // Handle mouse down
-        if (const auto* e = event->getIf<sf::Event::MouseButtonPressed>()) {
-
-
-
+        if (const auto *e = event->getIf<sf::Event::MouseButtonPressed>()) {
             sf::Vector2f mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
 
             // New way to handle events more gracefully...
-            core::events::EventBus bus;
             bus.dispatch(ui::events::MousePressedEvent{
                 core::mappers::SFMLMapper::toVector2f(mousePos),
                 core::mappers::SFMLMapper::toMouseButton(e->button)
             });
-
-            std::cout << "mousePos: " << mousePos.x << ", " << mousePos.y << std::endl;
-
-            for (auto &region: regions) {
-
-                std::cout << "regionPos: " << region->getPosition().x << ", " << region->getPosition().y << std::endl;
-
-                if (
-                    mousePos.x > region->getPosition().x && mousePos.x < (region->getSize().x + region->getPosition().x)
-                    && mousePos.y > region->getPosition().y && mousePos.y < (region->getSize().y + region->getPosition().y)
-                ) {
-                    std::cout << "Region matched!" << std::endl;
-
-                    // Some hacky code to force pen tool behavior on the Canvas instance
-                    if (region->getName() == this->APP_REGION_PEN_TOOL) {
-                        auto* canvas = dynamic_cast<ui::regions::Canvas*>(region.get());
-                        if (canvas) {
-
-                            // Only create if there's no active tool yet
-                            if (!canvas->getActiveTool()) {
-                                canvas->setActiveTool(std::make_unique<ui::elements::LineTool>());
-                            }
-
-                            if (canvas->getActiveTool() != nullptr) {
-                                canvas->getActiveTool()->handleMouseButtonPressed(mousePos);
-                            }
-                        }
-                    }
-                    region->handleMouseButtonPressed(mousePos);
-                }
-            }
         }
 
         // Handle mouse release

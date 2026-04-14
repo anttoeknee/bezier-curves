@@ -41,7 +41,7 @@ void ui::elements::Metrics::handleMouseMove(sf::Vector2f &mousePos) {
     mousePosition(mousePos);
 }
 
-void ui::elements::Metrics::handleMouseButtonPressed(sf::Vector2f &mousePos) {
+void ui::elements::Metrics::handleMouseButtonPressed(const core::Vector2f &mousePos) {
 }
 
 void ui::elements::Metrics::handleMouseButtonReleased() {

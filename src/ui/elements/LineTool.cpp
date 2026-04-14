@@ -5,6 +5,7 @@
 
 #include <iostream>
 
+#include "../../core/mappers/SFMLMapper.hpp"
 #include "SFML/Graphics/Vertex.hpp"
 #include "../../core/math/Geometry.hpp"
 #include "../common/Path.hpp"
@@ -70,32 +71,35 @@ namespace ui::elements {
     }
 
 
-    void LineTool::handleMouseButtonPressed(sf::Vector2f &mousePos) {
+    void LineTool::handleMouseButtonPressed(const core::Vector2f &mousePos) {
+
+        auto sfmlMousePos = core::mappers::SFMLMapper::toSfVector2f(mousePos);
+
         // First check if we're clicking on an existing anchor point for dragging
         for (size_t i = 0; i < anchorPointCount; ++i) {
-            if (controlShapes[i].getGlobalBounds().contains(mousePos)) {
+            if (controlShapes[i].getGlobalBounds().contains(sfmlMousePos)) {
                 isDragging = true;
                 draggedShapeIndex = i;
-                dragOffset = mousePos - controlShapes[i].getPosition();
+                dragOffset = sfmlMousePos - controlShapes[i].getPosition();
                 return;
             }
         }
 
         // Then check if we've clicked on the midpoint
-        if (controlShapes.back().getGlobalBounds().contains(mousePos)) {
+        if (controlShapes.back().getGlobalBounds().contains(sfmlMousePos)) {
             draggedShapeIndex = 2;
             isDragging = true;
-            dragOffset = mousePos - controlShapes.back().getPosition();
+            dragOffset = sfmlMousePos - controlShapes.back().getPosition();
             return;
         }
 
         // Otherwise create a new anchorPoint if we haven't reached the limit
         if (anchorPointCount < 2) {
 
-            std::cout << "Creating anchor point at: " << mousePos.x << ", " << mousePos.y << std::endl;
+            std::cout << "Creating anchor point at: " << sfmlMousePos.x << ", " << sfmlMousePos.y << std::endl;
             std::cout << "anchorPointCount before: " << anchorPointCount << std::endl;
 
-            common::Point anchorPoint = {"Point", mousePos, {15, 15}};
+            common::Point anchorPoint = {"Point", sfmlMousePos, {15, 15}};
 
             // Write directly to the array at the next available index
             controlShapes[anchorPointCount].setSize(sf::Vector2f(anchorPoint.size.x, anchorPoint.size.y));

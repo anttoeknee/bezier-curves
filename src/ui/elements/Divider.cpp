@@ -17,7 +17,7 @@ void ui::elements::Divider::update(sf::RenderWindow &target, sf::Vector2f origin
 void ui::elements::Divider::handleMouseMove(sf::Vector2f &mousePos) {
 }
 
-void ui::elements::Divider::handleMouseButtonPressed(sf::Vector2f &mousePos) {
+void ui::elements::Divider::handleMouseButtonPressed(const core::Vector2f &mousePos) {
 }
 
 void ui::elements::Divider::handleMouseButtonReleased() {

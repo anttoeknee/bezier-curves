@@ -1,5 +1,6 @@
 #include "Logo.hpp"
 
+#include "../../core/mappers/SFMLMapper.hpp"
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "../rendering/Bezier.hpp"
 #include "../common/ControlPoint.hpp"
@@ -84,12 +85,13 @@ void ui::elements::Logo::update(sf::RenderWindow &target, sf::Vector2f origin) {
 void ui::elements::Logo::handleMouseMove(sf::Vector2f &mousePos) {
 }
 
-void ui::elements::Logo::handleMouseButtonPressed(sf::Vector2f &mousePos) {
+void ui::elements::Logo::handleMouseButtonPressed(const core::Vector2f &mousePos) {
     for (auto &cp : controlPoints) {
-        if (cp.shape->getGlobalBounds().contains(mousePos)) {
+        auto sfmlMousePos = core::mappers::SFMLMapper::toSfVector2f(mousePos);
+        if (cp.shape->getGlobalBounds().contains(sfmlMousePos)) {
             draggedControlPoint = &cp;
             isDragging = true;
-            dragOffset = mousePos - cp.getPosition();
+            dragOffset = sfmlMousePos - cp.getPosition();
             return;
         }
     }

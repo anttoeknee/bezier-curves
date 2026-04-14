@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "../common/Point.hpp"
+#include "../../core/common/Vector2f.hpp"
 
 namespace ui::elements {
 
@@ -27,7 +28,7 @@ namespace ui::elements {
 
         void handleMouseMove(sf::Vector2f &mousePos) override;
 
-        void handleMouseButtonPressed(sf::Vector2f &mousePos) override;
+        void handleMouseButtonPressed(const core::Vector2f &mousePos) override;
 
         void handleMouseButtonReleased() override;
     };

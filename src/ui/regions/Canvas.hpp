@@ -14,7 +14,8 @@ namespace ui::regions {
             std::vector<std::unique_ptr<elements::Element> > &&elements,
             sf::Vector2f position,
             sf::Vector2f size,
-            std::string name
+            std::string name,
+            common::RegionNamesEnum id
         );
 
         ~Canvas() override;
@@ -23,7 +24,7 @@ namespace ui::regions {
 
         void handleMouseButtonReleased() override;
 
-        void handleMouseButtonPressed(sf::Vector2f &mousePos) override;
+        void handleMouseButtonPressed(const core::Vector2f &mousePos) override;
 
         void draw() override;
 

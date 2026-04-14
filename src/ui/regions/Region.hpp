@@ -1,6 +1,9 @@
 #pragma once
 #include <utility>
 
+#include "../../core/common/Vector2f.hpp"
+#include "../../core/utils/AssetManager.hpp"
+#include "../common/RegionNamesEnum.hpp"
 #include "../elements/Element.hpp"
 
 
@@ -23,6 +26,7 @@ namespace ui::regions {
         sf::Vector2f _position;
         sf::Vector2f _size;
         std::string _name;
+        common::RegionNamesEnum _id;
 
         std::vector<std::unique_ptr<elements::Element> > elements;
 
@@ -42,7 +46,7 @@ namespace ui::regions {
 
         virtual void handleMouseMove(sf::Vector2f &mousePos) = 0;
 
-        virtual void handleMouseButtonPressed(sf::Vector2f &mousePos) = 0;
+        virtual void handleMouseButtonPressed(const core::Vector2f &mousePos) = 0;
 
         virtual void handleMouseButtonReleased() = 0;
 
@@ -51,6 +55,8 @@ namespace ui::regions {
         sf::Vector2f getPosition() const { return _position; }
 
         sf::Vector2f getSize() const { return _size; }
+
+        common::RegionNamesEnum getId() const { return _id; }
 
         std::string getName() const { return _name; }
 

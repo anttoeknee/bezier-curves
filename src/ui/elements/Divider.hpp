@@ -1,5 +1,7 @@
 #pragma once
 #include "Element.hpp"
+#include "../../core/common/Vector2f.hpp"
+#include "../../core/utils/AssetManager.hpp"
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Graphics/RenderWindow.hpp"
 
@@ -13,7 +15,7 @@ namespace ui::elements {
 
         void handleMouseMove(sf::Vector2f &mousePos) override;
 
-        void handleMouseButtonPressed(sf::Vector2f &mousePos) override;
+        void handleMouseButtonPressed(const core::Vector2f &mousePos) override;
 
         void handleMouseButtonReleased() override;
 

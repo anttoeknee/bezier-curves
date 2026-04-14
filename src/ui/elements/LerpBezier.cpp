@@ -4,6 +4,8 @@
 
 #include "Element.hpp"
 #include "QuadraticBezier.hpp"
+#include "../../core/common/Vector2f.hpp"
+#include "../../core/mappers/SFMLMapper.hpp"
 #include "SFML/Graphics/Vertex.hpp"
 #include "../../core/math/Geometry.hpp"
 #include "SFML/Graphics/RectangleShape.hpp"
@@ -70,17 +72,18 @@ void ui::elements::LerpBezier::handleMouseMove(sf::Vector2f &mousePos) {
 
 }
 
-void ui::elements::LerpBezier::handleMouseButtonPressed(sf::Vector2f &mousePos) {
+void ui::elements::LerpBezier::handleMouseButtonPressed(const core::Vector2f &mousePos) {
     for (auto &controlPoint: controlPoints) {
 
         // Determine if we've mouse-downed on this shape
-        if (controlPoint->getGlobalBounds().contains(mousePos)) {
+        auto sfmlMousePos = core::mappers::SFMLMapper::toSfVector2f(mousePos);
+        if (controlPoint->getGlobalBounds().contains(sfmlMousePos)) {
             // Update our bool
             isDragging = true;
 
             // Make sure we don't get jumpy movement of the shape
             draggedShape = controlPoint.get();
-            dragOffset = mousePos - draggedShape->getPosition();
+            dragOffset = sfmlMousePos - draggedShape->getPosition();
 
             break;
         }

@@ -13,7 +13,7 @@ namespace ui::regions {
 
         void handleMouseButtonReleased() override;
 
-        void handleMouseButtonPressed(sf::Vector2f &mousePos) override;
+        void handleMouseButtonPressed(const core::Vector2f &mousePos) override;
 
         void draw() override;
 

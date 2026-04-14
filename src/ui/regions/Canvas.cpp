@@ -10,12 +10,14 @@ ui::regions::Canvas::Canvas(
         std::vector<std::unique_ptr<elements::Element>> &&elements,
         sf::Vector2f position,
         sf::Vector2f size,
-        std::string name
+        std::string name,
+        common::RegionNamesEnum id
     ): Region(target, std::move(elements)) {
 
     _position = position;
     _size = size;
     _name = name;
+    _id = id;
 }
 
 ui::regions::Canvas::~Canvas() = default;
@@ -23,7 +25,7 @@ ui::regions::Canvas::~Canvas() = default;
 void ui::regions::Canvas::handleMouseMove(sf::Vector2f &mousePos) {
 }
 
-void ui::regions::Canvas::handleMouseButtonPressed(sf::Vector2f &mousePos) {
+void ui::regions::Canvas::handleMouseButtonPressed(const core::Vector2f &mousePos) {
 
     // Pass to all elements (maybe we narrow down scope here like we do for regions?)
     for (auto &element: elements) {
