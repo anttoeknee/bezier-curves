@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.28)
 
 if (APPLE)
     project(BezierCurves LANGUAGES OBJCXX CXX C)
-elseif (WIN32)
+else ()
     project(BezierCurves LANGUAGES CXX)
 endif ()
 
@@ -83,32 +83,36 @@ add_executable(
 )
 
 # Fonts
-if(WIN32)
-    # Windows: Use objcopy from MinGW or create a custom command with xxd/PowerShell
+if(APPLE)
+    set(EMBED_FONT "segoeui.ttf")
+    add_custom_command(
+            OUTPUT ${CMAKE_BINARY_DIR}/font.o
+            COMMAND printf ".section __DATA,__font\\\\n.globl __binary_font_start\\\\n__binary_font_start:\\\\n.incbin \\\\\\\"${CMAKE_SOURCE_DIR}/assets/fonts/${EMBED_FONT}\\\\\\\"\\\\n.globl __binary_font_end\\\\n__binary_font_end:\\\\n" > ${CMAKE_BINARY_DIR}/font.s
+            COMMAND as -arch arm64 -o ${CMAKE_BINARY_DIR}/font.o ${CMAKE_BINARY_DIR}/font.s
+            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+            DEPENDS ${CMAKE_SOURCE_DIR}/assets/fonts/${EMBED_FONT}
+            COMMENT "Embedding ${EMBED_FONT} as object file"
+    )
+    set(FONT_OBJECT ${CMAKE_BINARY_DIR}/font.o)
+else()
+    if(WIN32)
+        set(EMBED_FONT "segoeui.ttf")
+    else()
+        set(EMBED_FONT "Ubuntu.ttf")
+    endif()
     find_program(OBJCOPY objcopy)
     if(OBJCOPY)
         add_custom_command(
-                OUTPUT ${CMAKE_BINARY_DIR}/segoeui_font.o
+                OUTPUT ${CMAKE_BINARY_DIR}/font.o
                 COMMAND ${OBJCOPY} -I binary -O elf64-x86-64 -B i386:x86-64
                 --rename-section .data=.rodata,alloc,load,readonly,data,contents
-                segoeui.ttf ${CMAKE_BINARY_DIR}/segoeui_font.o
+                ${EMBED_FONT} ${CMAKE_BINARY_DIR}/font.o
                 WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/assets/fonts
-                DEPENDS ${CMAKE_SOURCE_DIR}/assets/fonts/segoeui.ttf
-                COMMENT "Embedding segoeui.ttf as object file"
+                DEPENDS ${CMAKE_SOURCE_DIR}/assets/fonts/${EMBED_FONT}
+                COMMENT "Embedding ${EMBED_FONT} as object file"
         )
-        set(FONT_OBJECT ${CMAKE_BINARY_DIR}/segoeui_font.o)
+        set(FONT_OBJECT ${CMAKE_BINARY_DIR}/font.o)
     endif()
-elseif(APPLE)
-    # MacOS: Embed the font file using ld (this is horrible, but works)
-    add_custom_command(
-            OUTPUT ${CMAKE_BINARY_DIR}/segoeui_font.o
-            COMMAND printf ".section __DATA,__segoeui_ttf\\\\n.globl __binary_segoeui_ttf_start\\\\n__binary_segoeui_ttf_start:\\\\n.incbin \\\\\\\"${CMAKE_SOURCE_DIR}/assets/fonts/segoeui.ttf\\\\\\\"\\\\n.globl __binary_segoeui_ttf_end\\\\n__binary_segoeui_ttf_end:\\\\n" > ${CMAKE_BINARY_DIR}/segoeui_font.s
-            COMMAND as -arch arm64 -o ${CMAKE_BINARY_DIR}/segoeui_font.o ${CMAKE_BINARY_DIR}/segoeui_font.s
-            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-            DEPENDS ${CMAKE_SOURCE_DIR}/assets/fonts/segoeui.ttf
-            COMMENT "Embedding segoeui.ttf as object file using ld"
-    )
-    set(FONT_OBJECT ${CMAKE_BINARY_DIR}/segoeui_font.o)
 endif()
 
 # Add the embedded font to your target if available
@@ -132,7 +136,7 @@ add_custom_command(TARGET main POST_BUILD
 if (APPLE)
     target_sources(main PRIVATE src/core/utils/Mem.mm)
     target_sources(main PRIVATE src/core/utils/Config.mm)
-elseif (WIN32)
+else()
     target_sources(main PRIVATE src/core/utils/Mem.cpp src/core/utils/Config.cpp)
 endif ()
 
